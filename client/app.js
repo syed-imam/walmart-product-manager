@@ -2,6 +2,16 @@
  * Created by Adil Imam on 11/18/2017.
  */
 import axios from 'axios';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Main from './react-components/Main';
+
+
+ReactDOM.render((
+   <Main/>
+), document.getElementById('root'));
+
+/*
 
 var searchQueries={
     search1:'cereal',
@@ -26,13 +36,27 @@ axios.get('/request-walmart-products').then(response=>{
             "targets" : 0,
             "data": "mediumImage",
             "render" : function (data, type, full) {
+                console.log(full);
                 return '<img height="48px" width="48px" src="'+data+'"/>';
             }},{
             "targets" : 4,
             "data": "customerRatingImage",
             "render" : function (data, type, full) {
                 return '<img height="100%" width="80%" src="'+data+'"/>';
-            }}],
+            }},
+            {
+                "targets": 1,
+                "render": function (data, type, full) {
+                    return '<div> '+full.name+' <a href=""><i class="fa fa-external-link" aria-hidden="true"></i></a></div>';
+                }
+            },
+            {
+                "targets": 2,
+                "render": function (data, type, full) {
+                    return '<div> <input value="'+full.brandName+'"></div>';
+                }
+            }
+        ],
         columns: [
             { data: "mediumImage" },
             { data: "name" },
