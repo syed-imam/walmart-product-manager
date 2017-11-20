@@ -57,7 +57,7 @@ axios.post('/walmart-search-api', searchQueries)
         console.log(error);
     });
 
-/*
+
 //Get percentage of search results owned by each brand
 axios.post('/percentage-of-brands', brandNames)
     .then(response => {
@@ -76,7 +76,7 @@ axios.post('/percentage-of-brands-in-top3-search-results', brandNames)
     .catch(error => {
         console.log(error);
     });
-*/
+
 /*
 $(document).ready(function() {
     $('#table_id').DataTable( {

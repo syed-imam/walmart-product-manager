@@ -65,7 +65,7 @@ function calculatePercentageOfBrands(req, res, next) {
           //Aggeregate query to get percentage of brands
             Product.aggregate([{"$match": {"queryTime":{$gte: 60353, $lte: 61234}, "query":"cereal"}},
                 { "$group": { "_id": {"brandName":  "$brandName"}, "count": { "$sum": 1 }}},
-                { "$project": {"count": 1,"percentage": {"$concat": [ { "$substr": [ { "$multiply": [ { "$divide": [ "$count", {"$literal": numOfProductsInTimeRange }] }, 100 ] }, 0,2 ] }, "", "%" ]}}}
+                { "$project": {"count": 1,"percentage": {"$concat": [ { "$substr": [ { "$multiply": [ { "$divide": [ "$count", {"$literal": numOfProductsInTimeRange }] }, 100 ]}, 0,2 ] }, "", "%" ]}}}
             ]).exec((err, productsPercentages) =>{
                 if(err) throw err;
                 else {
