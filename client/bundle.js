@@ -11551,20 +11551,28 @@ var ProductsTable = function (_React$Component) {
                         "targets": 0,
                         "data": "mediumImage",
                         "render": function render(data, type, full) {
+                            data = data === undefined ? '../img/img-not-found.jpg' : data;
                             return '<img height="48px" width="48px" src="' + data + '"/>';
                         } }, {
                         "targets": 4,
                         "data": "customerRatingImage",
                         "render": function render(data, type, full) {
-                            return '<img height="100%" width="80%" src="' + data + '"/>';
+                            if (data === undefined) {
+                                data = '../img/img-not-found.jpg';
+                                return '<img height="40%" width="15%" src="' + data + '"/>';
+                            } else {
+                                return '<img height="100%" width="80%" src="' + data + '"/>';
+                            }
                         } }, {
                         "targets": 1,
                         "render": function render(data, type, full) {
-                            return '<div> ' + full.name + ' <a href=""><i class="fa fa-external-link" aria-hidden="true"></i></a></div>';
+                            full.productUrl = full.productUrl === undefined ? '#' : full.productUrl;
+                            return '<div> ' + full.name + ' <a href="' + full.productUrl + '"><i class="fa fa-external-link" aria-hidden="true"></i></a></div>';
                         }
                     }, {
                         "targets": 2,
                         "render": function render(data, type, full) {
+                            full.brandName = full.brandName === undefined ? 'Brand Name Not Available' : full.brandName;
                             return '<div id="bs-example" style="float:left"> <input class="typeahead tt-query" autocomplete="on" spellcheck="false" value="' + full.brandName + '"/><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" style="background-color:#101010cc; border:radius:10%; margin-left: 2px; color:white;" class="btn btn-default btn-round-sm btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div>';
                         }
                     }],
@@ -11626,17 +11634,17 @@ var ProductsTable = function (_React$Component) {
                             _react2.default.createElement(
                                 'th',
                                 { scope: 'col' },
-                                'Query'
+                                'Query Time'
                             ),
                             _react2.default.createElement(
                                 'th',
                                 { scope: 'col' },
-                                'Sale Price'
+                                'Customer Ratings'
                             ),
                             _react2.default.createElement(
                                 'th',
                                 { scope: 'col' },
-                                'Image'
+                                'Search Term'
                             )
                         )
                     ),

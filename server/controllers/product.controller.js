@@ -46,7 +46,8 @@ function buildModelData(response, next){
               salePrice: item.salePrice,
               mediumImage: item.mediumImage,
               brandName: item.brandName,
-              queryTime: (hours* 3600) + (minutes*60) + seconds
+              queryTime: (hours* 3600) + (minutes*60) + seconds,
+              productUrl: item.productUrl
           });
 
           product.save()

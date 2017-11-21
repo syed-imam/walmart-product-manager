@@ -14,22 +14,31 @@ class ProductsTable extends React.Component{
                     "targets" : 0,
                     "data": "mediumImage",
                     "render" : function (data, type, full) {
+                        data= data === undefined ? '../img/img-not-found.jpg' : data;
                         return '<img height="48px" width="48px" src="'+data+'"/>';
-                    }},{
+                    }},
+                    {
                     "targets" : 4,
                     "data": "customerRatingImage",
                     "render" : function (data, type, full) {
-                        return '<img height="100%" width="80%" src="'+data+'"/>';
-                    }},
+                        if(data === undefined){
+                            data='../img/img-not-found.jpg';
+                            return '<img height="40%" width="15%" src="'+data+'"/>';
+                        }
+                        else{
+                            return '<img height="100%" width="80%" src="'+data+'"/>';
+                        }}},
                     {
                         "targets": 1,
                         "render": function (data, type, full) {
-                            return '<div> '+full.name+' <a href=""><i class="fa fa-external-link" aria-hidden="true"></i></a></div>';
+                            full.productUrl= full.productUrl === undefined ? '#' : full.productUrl;
+                            return '<div> '+full.name+' <a href="'+full.productUrl+'"><i class="fa fa-external-link" aria-hidden="true"></i></a></div>';
                         }
                     },
                     {
                         "targets": 2,
                         "render": function (data, type, full) {
+                            full.brandName= full.brandName === undefined ? 'Brand Name Not Available' : full.brandName;
                             return '<div id="bs-example" style="float:left"> <input class="typeahead tt-query" autocomplete="on" spellcheck="false" value="'+full.brandName+'"/><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" style="background-color:#101010cc; border:radius:10%; margin-left: 2px; color:white;" class="btn btn-default btn-round-sm btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div>';
                         }
                     }
@@ -78,9 +87,9 @@ render() {
                         <th scope="col">Product</th>
                         <th scope="col">Name</th>
                         <th scope="col">Brand name</th>
-                        <th scope="col">Query</th>
-                        <th scope="col">Sale Price</th>
-                        <th scope="col">Image</th>
+                        <th scope="col">Query Time</th>
+                        <th scope="col">Customer Ratings</th>
+                        <th scope="col">Search Term</th>
                     </tr>
                     </thead>
                     <tbody>

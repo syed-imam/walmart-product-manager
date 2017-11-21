@@ -11,7 +11,8 @@ const ProductSchema = new mongoose.Schema({
     mediumImage: String,
     queryTime: Number,
     salePrice: Number,
-    brandName: String
+    brandName: String,
+    productUrl: String
 });
 
 export default mongoose.model('Product', ProductSchema);
