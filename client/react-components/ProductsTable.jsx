@@ -30,7 +30,7 @@ class ProductsTable extends React.Component{
                     {
                         "targets": 2,
                         "render": function (data, type, full) {
-                            return '<div style="float:left"> <input value="'+full.brandName+'"/><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.value)" style="background-color:#101010cc; border:radius:10%; margin-left: 2px; color:white;" class="btn btn-default btn-round-sm btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div>';
+                            return '<div id="bs-example" style="float:left"> <input class="typeahead tt-query" autocomplete="on" spellcheck="false" value="'+full.brandName+'"/><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" style="background-color:#101010cc; border:radius:10%; margin-left: 2px; color:white;" class="btn btn-default btn-round-sm btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div>';
                         }
                     }
                 ],
@@ -44,7 +44,27 @@ class ProductsTable extends React.Component{
                 ]
             });
 
-        }).catch(error=>{
+            // Defining the local dataset
+            var cars = ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
+
+            // Constructing the suggestion engine
+            var cars = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                local: cars
+            });
+            // Initializing the typeahead
+            $('.typeahead').typeahead({
+                    hint: true,
+                    highlight: true, /* Enable substring highlighting */
+                    minLength: 1 /* Specify minimum characters required for showing result */
+                },
+                {
+                    name: 'cars',
+                    source: cars
+                });
+
+    }).catch(error=>{
             console.log(error);
         });
     }

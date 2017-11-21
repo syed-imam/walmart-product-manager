@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Route, NavLink, BrowserRouter} from "react-router-dom";
+import {Route, Link, HashRouter} from "react-router-dom";
 import ProductsTable from './ProductsTable';
 import BrandStatistics from './BrandStatistics';
 
@@ -7,24 +7,25 @@ class Main extends Component {
 
     render() {
         return (
-                <BrowserRouter>
+                <HashRouter>
                     <div className="container">
                         <ul className="nav nav-tabs">
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/products">Products Table</NavLink>
+                                <Link className="nav-link" to="/">Products Table</Link>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/brand-statistics">Brand Statistics</NavLink>
+                                <Link className="nav-link" to="/brand-statistics">Brand Statistics</Link>
                             </li>
                         </ul>
                         <div className="content">
-                            <Route path="/products" component={ProductsTable}/>
+                            <Route exact path="/" component={ProductsTable}/>
                             <Route path="/brand-statistics" component={BrandStatistics}/>
                        </div>
                     </div>
-                </BrowserRouter>
+                </HashRouter>
         );
     }
 }
 export default Main;
+
 

@@ -10407,7 +10407,7 @@ var Main = function (_Component) {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
-                _reactRouterDom.BrowserRouter,
+                _reactRouterDom.HashRouter,
                 null,
                 _react2.default.createElement(
                     "div",
@@ -10419,8 +10419,8 @@ var Main = function (_Component) {
                             "li",
                             { className: "nav-item" },
                             _react2.default.createElement(
-                                _reactRouterDom.NavLink,
-                                { className: "nav-link", to: "/products" },
+                                _reactRouterDom.Link,
+                                { className: "nav-link", to: "/" },
                                 "Products Table"
                             )
                         ),
@@ -10428,7 +10428,7 @@ var Main = function (_Component) {
                             "li",
                             { className: "nav-item" },
                             _react2.default.createElement(
-                                _reactRouterDom.NavLink,
+                                _reactRouterDom.Link,
                                 { className: "nav-link", to: "/brand-statistics" },
                                 "Brand Statistics"
                             )
@@ -10437,7 +10437,7 @@ var Main = function (_Component) {
                     _react2.default.createElement(
                         "div",
                         { className: "content" },
-                        _react2.default.createElement(_reactRouterDom.Route, { path: "/products", component: _ProductsTable2.default }),
+                        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _ProductsTable2.default }),
                         _react2.default.createElement(_reactRouterDom.Route, { path: "/brand-statistics", component: _BrandStatistics2.default })
                     )
                 )
@@ -11565,10 +11565,29 @@ var ProductsTable = function (_React$Component) {
                     }, {
                         "targets": 2,
                         "render": function render(data, type, full) {
-                            return '<div style="float:left"> <input value="' + full.brandName + '"/><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.value)" style="background-color:#101010cc; border:radius:10%; margin-left: 2px; color:white;" class="btn btn-default btn-round-sm btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div>';
+                            return '<div id="bs-example" style="float:left"> <input class="typeahead tt-query" autocomplete="on" spellcheck="false" value="' + full.brandName + '"/><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" style="background-color:#101010cc; border:radius:10%; margin-left: 2px; color:white;" class="btn btn-default btn-round-sm btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div>';
                         }
                     }],
                     columns: [{ data: "mediumImage" }, { data: "name" }, { data: "brandName" }, { data: "salePrice" }, { data: "customerRatingImage" }, { data: "query" }]
+                });
+
+                // Defining the local dataset
+                var cars = ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
+
+                // Constructing the suggestion engine
+                var cars = new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.whitespace,
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    local: cars
+                });
+                // Initializing the typeahead
+                $('.typeahead').typeahead({
+                    hint: true,
+                    highlight: true, /* Enable substring highlighting */
+                    minLength: 1 /* Specify minimum characters required for showing result */
+                }, {
+                    name: 'cars',
+                    source: cars
                 });
             }).catch(function (error) {
                 console.log(error);
