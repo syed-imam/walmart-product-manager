@@ -124,4 +124,6 @@ render() {
         );
     }
 }
+
+
 export default ProductsTable;

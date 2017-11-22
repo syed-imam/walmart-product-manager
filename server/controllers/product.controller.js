@@ -11,9 +11,9 @@ const walmartApiKey=config.walmartSearchAPI.apiKey;
 
 
 function queryWalmartApi(req, res, next){
-    let search1=req.body.search1;
-    let search2=req.body.search2;
 
+    let search1="cereal";
+    let search2="cold+cereal";
     axios.all([
         axios.get(walmartApiEndpoint+"?query="+search1+"&format=json&responseGroup=full&facet=on&apiKey="+walmartApiKey),
         axios.get(walmartApiEndpoint+"?query="+search2+"&format=json&responseGroup=full&facet=on&apiKey="+walmartApiKey)
@@ -21,7 +21,6 @@ function queryWalmartApi(req, res, next){
 
         var response=[result1.data,result2.data];
         buildModelData(response, next);
-        res.send("Success");
 
     })).catch(error => {
         console.log(error);
@@ -38,7 +37,6 @@ function buildModelData(response, next){
   //Loop through both responses and persist that into database
   for(let data of response){
       for (let item of data.items){
-          console.log("Here");
           const product = new Product({
               query: data.query,
               name: item.name,
@@ -62,13 +60,15 @@ function buildModelData(response, next){
 
 function calculatePercentageOfBrands(req, res, next) {
 
-    //    { "$project": {"count": 1,"percentage": { "$substr": [ { "$multiply": [ { "$divide": [ "$count", {"$literal": numOfProductsInTimeRange }] }, 100 ]}, 0,3 ] }}}
-
-
-    Product.find({$or: [{queryTime: {$lte: 63102}}, {queryTime: {$gte: 4246635}}]}).count(function (err, numOfProductsInTimeRange){
-
+     var startTime=req.body.timeStart;
+     var limitTime=req.body.limitTime;
+     var searchQuery=req.body.searchQuery;
+     /*
+         Queries mongoDB to return percentages of brands in search results within a given time range and a search query
+      */
+    Product.find({$or: [{queryTime: {$gte: startTime}}, {queryTime: {$lte: limitTime}}]}).count(function (err, numOfProductsInTimeRange){
           //Aggeregate query to get percentage of brands
-            Product.aggregate([{"$match": {"queryTime":{$lte: 60353, $gte: 2000}, "query":"cold cereal"}},
+            Product.aggregate([{"$match": {"queryTime":{$lte: 60353, $gte: 2000}, "query":searchQuery}},
                 { "$group": { "_id": {"brandName":  "$brandName"}, "count": { "$sum": 1 }}},
                 { "$project": {"count": 1,"percentage": { "$multiply": [ { "$divide": [ "$count", {"$literal": numOfProductsInTimeRange }] }, 100 ]}}}
             ]).exec((err, productsPercentages) =>{

@@ -5,7 +5,6 @@
  * @param brandValue
  */
 function saveBrandValue(id, brandValue){
-
     console.log(id, brandValue);
     var brandData={id: id, newBrand: brandValue}
 
@@ -17,5 +16,4 @@ function saveBrandValue(id, brandValue){
         .done(function(res){
             console.log(res);
         });
-
 }

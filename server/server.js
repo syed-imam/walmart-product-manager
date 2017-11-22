@@ -7,6 +7,8 @@ import config from '../config/config';
 import express from 'express';
 import path from 'path';
 import routes from './routes/index.route.js';
+import cron from 'node-cron';
+import productCtrl from './controllers/product.controller'
 
 //Create the express app
 const app=express();
@@ -27,5 +29,8 @@ mongoose.connect(mongoUrl, {
 mongoose.connection.on('error', () => {
     throw new Error(`unable to connect to database: ${mongoUrl}`);
 });
+
+cron.schedule('*/1 * * * *', productCtrl.queryWalmartApi);
+
 
 export default app;
