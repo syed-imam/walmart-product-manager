@@ -11553,10 +11553,54 @@ var BrandStatistics = function (_React$Component) {
                 'div',
                 null,
                 _react2.default.createElement(
-                    'h2',
-                    null,
-                    'Brand Names'
+                    'div',
+                    { className: 'form-row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'form-group col-md-3' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'BrandName'
+                        ),
+                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'inputCity' })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'form-group col-md-3' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Time Range'
+                        ),
+                        _react2.default.createElement(
+                            'select',
+                            { id: 'inputState', className: 'form-control' },
+                            _react2.default.createElement(
+                                'option',
+                                { selected: true },
+                                'Choose...'
+                            ),
+                            _react2.default.createElement(
+                                'option',
+                                null,
+                                '...'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'form-group col-md-4' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Query'
+                        ),
+                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'inputZip' })
+                    )
                 ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('br', null),
                 _react2.default.createElement(
                     'div',
                     { className: 'row' },

@@ -59,7 +59,25 @@ class BrandStatistics extends React.Component {
 
         return (
             <div>
-                <h2>Brand Names</h2>
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                        <label>BrandName</label>
+                        <input type="text" className="form-control" id="inputCity"/>
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label>Time Range</label>
+                        <select id="inputState" className="form-control">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div className="form-group col-md-4">
+                        <label>Query</label>
+                        <input type="text" className="form-control" id="inputZip"/>
+                    </div>
+
+                </div>
+                <br/><br/>
                   <div className="row">
                       {brandsList}
                   </div>
