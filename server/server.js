@@ -18,7 +18,6 @@ app.use('/', routes);
 app.use(express.static(path.join(__dirname,'../client')));
 
 //Set up MongoDB Connection
-
 mongoose.Promise=Promise;
 const mongoUrl = config.mongoDB.host;
 mongoose.connect(mongoUrl, {
@@ -30,5 +29,3 @@ mongoose.connection.on('error', () => {
 });
 
 export default app;
-
-//console.log(util.inspect(config, false, null))

@@ -65,6 +65,8 @@ input .twitter-typeahead{
     position: relative;
     margin: 100px;
 }
+
+
 .typeahead, .tt-query, .tt-hint {
     border: 2px solid #CCCCCC;
     border-radius: 8px;
@@ -78,6 +80,11 @@ input .twitter-typeahead{
 .typeahead {
     background-color: #FFFFFF;
 }
+
+span .twitter-typeahead > span .twitter-typeahead{
+    position: absolute!important;
+}
+
 .typeahead:focus {
     border: 2px solid #0097CF;
 }
@@ -107,4 +114,28 @@ input .twitter-typeahead{
 }
 .tt-suggestion p {
     margin: 0;
+}
+
+
+.page {
+    margin: 40px;
+}
+
+h1{
+    margin: 40px 0 60px 0;
+}
+
+.dark-area {
+    background-color: #666;
+    padding: 40px;
+    margin: 0 -40px 20px -40px;
+    clear: both;
+}
+
+.clearfix:before,.clearfix:after {content: " "; display: table;}
+.clearfix:after {clear: both;}
+.clearfix {*zoom: 1;}
+
+.brand-names{
+    margin-left:10%;
 }

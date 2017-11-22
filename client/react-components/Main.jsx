@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import {Route, Link, HashRouter} from "react-router-dom";
 import ProductsTable from './ProductsTable';
 import BrandStatistics from './BrandStatistics';
-
 class Main extends Component {
+
+    constructor() {
+        super();
+    }
 
     render() {
         return (
@@ -18,7 +21,7 @@ class Main extends Component {
                             </li>
                         </ul>
                         <div className="content">
-                            <Route exact path="/" component={ProductsTable}/>
+                            <Route exact path="/"  component={ProductsTable}/>
                             <Route path="/brand-statistics" component={BrandStatistics}/>
                        </div>
                     </div>

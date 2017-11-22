@@ -26,7 +26,13 @@ router.post('/percentage-of-brands',productCtrl.calculatePercentageOfBrands);
 
 router.post('/percentage-of-brands-in-top3-search-results',productCtrl.calculatePercentageOfBrandsTop3Results);
 
+router.post('/update-brand-name',productCtrl.updateBrandName);
+
 router.get('/request-walmart-products', productCtrl.requestProducts);
+
+router.get('/request-walmart-brands', productCtrl.requestUniqueBrands);
+
+
 
 
 export default router;

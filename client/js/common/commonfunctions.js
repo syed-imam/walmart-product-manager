@@ -1,8 +1,21 @@
+
 /**
- * Created by Adil Imam on 11/20/2017.
+ * Persist brand data
+ * @param id
+ * @param brandValue
  */
 function saveBrandValue(id, brandValue){
-    //save this in mongoDB
-    console.log(id, brandValue);
-}
 
+    console.log(id, brandValue);
+    var brandData={id: id, newBrand: brandValue}
+
+    $.ajax({
+        method: "POST",
+        url: "/update-brand-name",
+        data: brandData
+    })
+        .done(function(res){
+            console.log(res);
+        });
+
+}

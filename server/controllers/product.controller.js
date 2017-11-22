@@ -2,6 +2,7 @@
  * Created by Adil Imam on 11/18/2017.
  */
 import Product from '../models/product.model';
+import mongoose from 'mongoose';
 import axios from 'axios';
 import config from '../../config/config'
 
@@ -10,8 +11,8 @@ const walmartApiKey=config.walmartSearchAPI.apiKey;
 
 
 function queryWalmartApi(req, res, next){
-    var search1=req.body.search1;
-    var search2=req.body.search2;
+    let search1=req.body.search1;
+    let search2=req.body.search2;
 
     axios.all([
         axios.get(walmartApiEndpoint+"?query="+search1+"&format=json&responseGroup=full&facet=on&apiKey="+walmartApiKey),
@@ -61,16 +62,18 @@ function buildModelData(response, next){
 
 function calculatePercentageOfBrands(req, res, next) {
 
+    //    { "$project": {"count": 1,"percentage": { "$substr": [ { "$multiply": [ { "$divide": [ "$count", {"$literal": numOfProductsInTimeRange }] }, 100 ]}, 0,3 ] }}}
+
+
     Product.find({$or: [{queryTime: {$lte: 63102}}, {queryTime: {$gte: 4246635}}]}).count(function (err, numOfProductsInTimeRange){
 
           //Aggeregate query to get percentage of brands
-            Product.aggregate([{"$match": {"queryTime":{$gte: 60353, $lte: 61234}, "query":"cereal"}},
+            Product.aggregate([{"$match": {"queryTime":{$lte: 60353, $gte: 2000}, "query":"cold cereal"}},
                 { "$group": { "_id": {"brandName":  "$brandName"}, "count": { "$sum": 1 }}},
-                { "$project": {"count": 1,"percentage": {"$concat": [ { "$substr": [ { "$multiply": [ { "$divide": [ "$count", {"$literal": numOfProductsInTimeRange }] }, 100 ]}, 0,2 ] }, "", "%" ]}}}
+                { "$project": {"count": 1,"percentage": { "$multiply": [ { "$divide": [ "$count", {"$literal": numOfProductsInTimeRange }] }, 100 ]}}}
             ]).exec((err, productsPercentages) =>{
                 if(err) throw err;
                 else {
-
                     var result =[];
                     for(let product of productsPercentages){
                        console.log(product._id.brandName);
@@ -123,4 +126,33 @@ function requestProducts(req, res){
         });
 }
 
-export default {queryWalmartApi, calculatePercentageOfBrands, calculatePercentageOfBrandsTop3Results, requestProducts};
+function requestUniqueBrands(req, res){
+    Product.distinct("brandName", function(err, response){
+        console.log(response);
+        res.send(JSON.stringify(response));
+    });
+}
+
+/**
+ * Function to allow persistent brand name change
+ * @param req
+ * @param res
+ */
+function updateBrandName(req, res){
+
+    var id = req.body.id;
+    var newBrand= req.body.newBrand;
+
+   Product.findOne({"_id":id}, function(err, doc){
+       if(err){ console.log(err); throw err;}
+       doc.brandName=newBrand;
+       doc.save(function(err, updatedDoc){
+          if(err){
+              throw err;
+          }
+           res.send(updatedDoc);
+       });
+   });
+}
+
+export default {queryWalmartApi, calculatePercentageOfBrands, calculatePercentageOfBrandsTop3Results, requestProducts, requestUniqueBrands, updateBrandName};

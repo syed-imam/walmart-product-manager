@@ -1,5 +1,5 @@
-
 var path = require('path');
+const webpack=require('webpack');
 
 module.exports = {
     entry: './client/app.js',
@@ -8,11 +8,14 @@ module.exports = {
         filename: 'bundle.js',
     },
     module: {
-        loaders: [
+        rules: [
+            {   test: /\.css$/,
+                loader:'style!css!'
+            },
             {
                 test: [/\.jsx?$/],
-                loader: 'babel-loader',
                 exclude: /(node_modules)/,
+                loader: 'babel-loader',
                 query: {
                     presets: ['react', 'es2015','env', 'stage-2']
                 },

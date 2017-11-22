@@ -3,9 +3,21 @@ import axios from 'axios';
 import {Table} from 'react-bootstrap';
 
 class ProductsTable extends React.Component{
-    componentDidMount(){
-        axios.get('/request-walmart-products').then(response=>{
-            var productSet=response.data;
+
+    constructor(props){
+        super();
+        console.log(props);
+    }
+
+    componentWillMount(){
+        axios.all([
+            axios.get('/request-walmart-brands'),
+            axios.get('/request-walmart-products')
+        ]).then(axios.spread((res1, res2) => {
+            let brandsResult=res1.data;
+            console.log(brandsResult);
+            let productSet=res2.data;
+
             //Generating table from Datatables
             $('#table_id').DataTable({
                 responsive: true,
@@ -18,16 +30,16 @@ class ProductsTable extends React.Component{
                         return '<img height="48px" width="48px" src="'+data+'"/>';
                     }},
                     {
-                    "targets" : 4,
-                    "data": "customerRatingImage",
-                    "render" : function (data, type, full) {
-                        if(data === undefined){
-                            data='../img/img-not-found.jpg';
-                            return '<img height="40%" width="15%" src="'+data+'"/>';
-                        }
-                        else{
-                            return '<img height="100%" width="80%" src="'+data+'"/>';
-                        }}},
+                        "targets" : 4,
+                        "data": "customerRatingImage",
+                        "render" : function (data, type, full) {
+                            if(data === undefined){
+                                data='../img/img-not-found.jpg';
+                                return '<img height="40%" width="15%" src="'+data+'"/>';
+                            }
+                            else{
+                                return '<img height="100%" width="80%" src="'+data+'"/>';
+                            }}},
                     {
                         "targets": 1,
                         "render": function (data, type, full) {
@@ -53,29 +65,42 @@ class ProductsTable extends React.Component{
                 ]
             });
 
-            // Defining the local dataset
-            var cars = ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
-
             // Constructing the suggestion engine
-            var cars = new Bloodhound({
+            var brandsSet = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.whitespace,
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                local: cars
+                local: brandsResult
             });
             // Initializing the typeahead
             $('.typeahead').typeahead({
                     hint: true,
-                    highlight: true, /* Enable substring highlighting */
-                    minLength: 1 /* Specify minimum characters required for showing result */
+                    highlight: true,
+                    minLength: 1
                 },
                 {
-                    name: 'cars',
-                    source: cars
+                    name: 'brands',
+                    source: brandsSet
                 });
 
-    }).catch(error=>{
+            $("#table_id_paginate").click(function(){
+
+                $('.typeahead').typeahead('destroy'); //i need to use this clear already created typeahead()!
+                // Initializing the typeahead
+                $('.typeahead').typeahead({
+                        hint: true,
+                        highlight: true,
+                        minLength: 1
+                    },
+                    {
+                        name: 'brands',
+                        source: brandsSet
+                    });
+            });
+
+        })).catch(error => {
             console.log(error);
         });
+
     }
 
 render() {
@@ -99,5 +124,4 @@ render() {
         );
     }
 }
-
 export default ProductsTable;
