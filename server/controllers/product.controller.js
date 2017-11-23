@@ -15,7 +15,7 @@ const walmartApiKey=config.walmartSearchAPI.apiKey;
  * @param req
  * @param res
  */
-function queryWalmartApi(req, res){
+function queryWalmartApi(req, res, next){
 
     let search1="cereal";
     let search2="cold+cereal";
@@ -56,7 +56,6 @@ function buildModelData(response, next){
 
           product.save()
               .then(savedProductItem => {
-                  console.log("Success");
               })
               .catch(e => next(e));
       }

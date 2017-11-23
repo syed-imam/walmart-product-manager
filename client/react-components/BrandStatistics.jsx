@@ -65,9 +65,8 @@ class BrandStatistics extends React.Component {
 
     generateBrandsList(){
         let brands = this.state.brandStats;
-        console.log(this.state.brandStats);
         let brandsList= brands.map((brand)=>{
-            return <div className="col-md-3" key={brand.brandname}> <CirclePercentage percentage={brand.brandpercent}/> <h2>{brand.brandname}</h2></div>
+            return <div className="col-md-3" key={brand.brandname}> <CirclePercentage percentage={brand.brandpercent}/> <h2 className="brand-headings">{brand.brandname}</h2></div>
         });
 
         return brandsList;

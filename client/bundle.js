@@ -11574,7 +11574,7 @@ var BrandStatistics = function (_React$Component) {
                     ' ',
                     _react2.default.createElement(
                         'h2',
-                        null,
+                        { className: 'brand-headings' },
                         brand.brandname
                     )
                 );
@@ -11846,7 +11846,6 @@ var CirclePercentage = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (CirclePercentage.__proto__ || Object.getPrototypeOf(CirclePercentage)).call(this));
 
-        console.log(props.percentage);
         _this.state = { percentage: props.percentage };
         return _this;
     }
@@ -11854,7 +11853,6 @@ var CirclePercentage = function (_React$Component) {
     _createClass(CirclePercentage, [{
         key: "componentWillReceiveProps",
         value: function componentWillReceiveProps(nextProps) {
-            console.log(nextProps);
             this.setState({ percentage: nextProps.percentage });
         }
     }, {
