@@ -16,12 +16,12 @@ Simple 3 steps
 3. npm start
 4. Open browser with url: http://localhost:3000
 ### How to Use it
-There are 2 tabs in the index page, 
-Tabs 1 (Products Table) loads and displays the products table 
+There are 2 tabs in the index page <br>
+Tab 1 (Products Table) loads and displays the products table 
 ![Alt text](https://s3.amazonaws.com/adil-static-test/page1.png "Products Table");
 
-Tabs 2 (Brand Statistics) renders the brand statistics
-Note: Initial render of this page will pass in generate percentages with default params(query="cereal", startTime=00:00:00, limitTime=23:59:59, all search results)
+Tab 2 (Brand Statistics) renders the brand statistics <br>
+Note: Initial render of this page will generate percentages with default params(query="cereal", startTime=00:00:00, limitTime=23:59:59, all search results)
 ![Alt text](https://s3.amazonaws.com/adil-static-test/page2.png "Products Table");
 
 ## Authors
