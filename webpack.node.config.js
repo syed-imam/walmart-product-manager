@@ -8,7 +8,7 @@ fs.readdirSync(path.resolve(__dirname, 'node_modules'))
     .forEach(mod => { nodeModules[mod] = `commonjs ${mod}`; });
 
 module.exports =
-    {  // The configuration for the server-side rendering
+    {
         name: 'server',
         target: 'node',
         entry: './index.js',
@@ -22,11 +22,7 @@ module.exports =
                 { test: /\.js$/,
 
                     loaders: [
-                        // 'imports?document=this',
-
-                        // 'react-hot',
                         'babel-loader'
-                        //,'jsx-loader'
                     ]
                 },
                 { test:  /\.json$/, loader: 'json-loader' },
