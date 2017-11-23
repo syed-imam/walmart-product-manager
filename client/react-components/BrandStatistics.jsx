@@ -19,19 +19,25 @@ class BrandStatistics extends React.Component {
     }
 
     componentWillMount(){
-        //  this.buildBrandsStatList();
+          this.buildBrandsStatList(0, 86399, "cereal","/percentage-of-brands");
     }
 
-    submitStatisticsQuery(e){
-     if(e)
-     {e.preventDefault();}
-
-     let startTime=(this.timeStartHours.value* 3600) + (this.timeStartMinutes.value*60) + this.timeStartSeconds.value;
-     let limitTime=(this.timeLimitHours.value* 3600) + (this.timeLimitMinutes.value*60) + this.timeLimitSeconds.value;
-     let searchQuery= this.query.value;
-     this.buildBrandsStatList(startTime, limitTime, searchQuery);
+    submitStatisticsQuery(e) {
+        if (e) {
+            e.preventDefault();
+        }
+        let startTime = (this.timeStartHours.value * 3600) + (this.timeStartMinutes.value) * 60 + (this.timeStartSeconds.value * 1);
+        let limitTime = (this.timeLimitHours.value * 3600) + (this.timeLimitMinutes.value * 60) + (this.timeLimitSeconds.value * 1);
+        let searchQuery = this.query.value;
+        let endpoint1='/percentage-of-brands-in-top3-search-results';
+        let endpoint2='/percentage-of-brands';
+        if (this.top3results.checked) {
+            this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint1);
+        }
+        else{
+            this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint2);
+        }
     }
-
     generateQueryOptions(){
         let queries=['cereal', 'cold cereal'];
         let queryOptions=[];
@@ -44,15 +50,14 @@ class BrandStatistics extends React.Component {
     generateHoursRange(){
         let hours=[];
         for(let i=0;i<=23;i++) {
-            hours.push(<option key={i} value={i}>{i}</option>);
-        }
+               hours.push(<option key={i} value={i}>{i}</option>);
+         }
         return hours;
      }
 
     generateMinuteOrSecondRange(){
         let time=[];
-        for(let i=0; i<=59; i++)
-        {
+        for(let i=0; i<=59; i++){
             time.push(<option key={i} value={i}>{i}</option>);
         }
         return time;
@@ -60,23 +65,23 @@ class BrandStatistics extends React.Component {
 
     generateBrandsList(){
         let brands = this.state.brandStats;
-
+        console.log(this.state.brandStats);
         let brandsList= brands.map((brand)=>{
-            return <div className="col-md-3" key={brand.brandname}> <CirclePercentage percentage={brand.brandpercent}/><h2 className="brand-names">{brand.brandname}</h2></div>
+            return <div className="col-md-3" key={brand.brandname}> <CirclePercentage percentage={brand.brandpercent}/> <h2>{brand.brandname}</h2></div>
         });
 
         return brandsList;
     }
 
 
-    buildBrandsStatList(startTime, limitTime, searchQuery){
+    buildBrandsStatList(startTime, limitTime, searchQuery, url){
         var payLoad={
             timeStart: startTime,
             limitTime: limitTime,
             searchQuery: searchQuery
         };
 
-        axios.post('/percentage-of-brands', payLoad)
+        axios.post(url, payLoad)
             .then(response => {
 
                 var brandStatisticsArray=[];
@@ -95,37 +100,38 @@ class BrandStatistics extends React.Component {
                         brandStatisticsArray.push({brandname:brandNames[brandName], brandpercent:0.00});
                     }
                 }
-                 this.setState({brandNames:this.state.brandNames, brandStats:brandStatisticsArray});
+                this.setState({brandNames:this.state.brandNames, brandStats:brandStatisticsArray});
             })
             .catch(error => {
                 console.log(error);
             });
     }
 
-    render() {
 
+    render() {
+console.log("I am here");
        return (
             <div>
-              <div className="well">
-                <div className="form-row">
-                    <div className="form-group col-md-3">
+                <div className="well">
+                  <div className="row">
+                        <div className="form-group col-md-3">
                         <label className="text-justify text-center">Time Start</label>
                         <div className="row">
                           <div className="col-md-4">
-                              <label className="font-weight-light">Hours</label>
+                              <label className="font-weight-light">Hour</label>
                               <select id="inputState" className="form-control" ref={(value) => { this.timeStartHours = value}}>
                                   {this.generateHoursRange()}
                               </select>
                           </div>
                             <div className="col-md-4">
-                                <label className="font-weight-light">Minutes</label>
+                                <label className="font-weight-light">Min</label>
                                 <select id="inputState" className="form-control" ref={(value) => { this.timeStartMinutes = value}}>
                                     {this.generateMinuteOrSecondRange()}
                                 </select>
                             </div>
                             <div className="col-md-4">
-                                <label className="font-weight-light">Seconds</label>
-                                <select id="inputState" className="form-control" ref={(value) => { this.timeStartSeconds = value}}>
+                                <label className="font-weight-light">Sec</label>
+                                <select id="inputState" className="form-control"  ref={(value) => { this.timeStartSeconds = value}}>
                                     {this.generateMinuteOrSecondRange()}
                                 </select>
                             </div>
@@ -136,46 +142,53 @@ class BrandStatistics extends React.Component {
                         <label>Time Limit</label>
                         <div className="row">
                             <div className="col-md-4">
-                                <label className="font-weight-light">Hours</label>
-                                <select id="inputState" className="form-control" ref={(value) => { this.timeLimitHours = value}}>
+                                <label className="font-weight-light">Hour</label>
+                                <select id="inputState" className="form-control" defaultValue="23" ref={(value) => { this.timeLimitHours = value}}>
                                     {this.generateHoursRange()}
                                 </select>
                             </div>
                             <div className="col-md-4">
-                                <label className="font-weight-light">Minutes</label>
-                                <select id="inputState" className="form-control" ref={(value) => { this.timeLimitMinutes = value}}>
+                                <label className="font-weight-light">Min</label>
+                                <select id="inputState" className="form-control" defaultValue="59" ref={(value) => { this.timeLimitMinutes = value}}>
                                     {this.generateMinuteOrSecondRange()}
                                 </select>
                             </div>
                             <div className="col-md-4">
-                                <label className="font-weight-light">Seconds</label>
-                                <select id="inputState" className="form-control" ref={(value) => { this.timeLimitSeconds = value}}>
+                                <label className="font-weight-light">Sec</label>
+                                <select id="inputState" className="form-control" defaultValue="59" ref={(value) => { this.timeLimitSeconds = value}}>
                                     {this.generateMinuteOrSecondRange()}
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div className="form-group col-md-4">
-                       <div className="row">
-                            <label>Query</label>
-                            <select id="inputState" className="form-control" ref={(value) => { this.query = value}}>
+                    <div className="form-group col-md-2">
+                        <br/>
+                        <div className="row">
+                            <br/>
+                            <select id="inputState" className="form-control query-class" ref={(value) => { this.query = value}}>
                                 {this.generateQueryOptions()}
                             </select>
                        </div>
                     </div>
-
+                      <div className="form-check col-md-2">
+                          <label className="form-check-label top-3-result">
+                              <input type="checkbox" className="form-check-input" ref={(value) => { this.top3results = value}}/>
+                                  Only top 3 results
+                          </label>
+                      </div>
                     <div className="form-group col-md-2">
-                        <div className="row">
-                            <input className="btn btn-dark"  type="button" value="Submit"  onClick={this.submitStatisticsQuery}/>
+                        <div className="row"><br/> <br/>
+                            <input className="btn btn-dark submit-button"  type="button" value="Submit"  onClick={this.submitStatisticsQuery}/>
                         </div>
                     </div>
                 </div>
-                <div>
-                    {this.generateBrandsList()}
-                </div>
-               </div>
             </div>
-
+                <div className="container brands-stats">
+                   <div className="row">
+                    {this.generateBrandsList()}
+                  </div>
+                </div>
+            </div>
         );
     }
 

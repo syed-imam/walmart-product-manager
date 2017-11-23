@@ -3,13 +3,17 @@ class CirclePercentage extends React.Component{
 
     constructor(props){
         super();
-        console.log(props);
+        console.log(props.percentage);
         this.state={percentage:props.percentage};
     }
 
-    render() {
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        this.setState({percentage:nextProps.percentage});
+    }
 
-        var roundPercentage=Math.round(this.state.percentage);
+    render(){
+    var roundPercentage=Math.round(this.state.percentage);
         var brandPercentage="c100 p"+roundPercentage+" dark big green";
         return (
             <div>

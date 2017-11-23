@@ -75,7 +75,7 @@ input .twitter-typeahead{
     line-height: 30px;
     outline: medium none;
     padding: 8px 12px;
-    width: 220px;
+    width: 150px;
 }
 .typeahead {
     background-color: #FFFFFF;
@@ -139,3 +139,23 @@ h1{
 .brand-names{
     margin-left:10%;
 }
+
+.query-class{
+    margin-top:5%;
+}
+.top-3-result{
+    margin-top:35%;
+}
+
+.submit-button{
+    margin-top:5%;
+}
+
+span .twitter-typeahead{
+    width:70%;
+}
+
+.brands-stats{
+margin-top: 10%;
+}
+

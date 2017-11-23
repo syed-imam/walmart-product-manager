@@ -44,7 +44,7 @@ class ProductsTable extends React.Component{
                         "targets": 1,
                         "render": function (data, type, full) {
                             full.productUrl= full.productUrl === undefined ? '#' : full.productUrl;
-                            return '<div> '+full.name+' <a href="'+full.productUrl+'"><i class="fa fa-external-link" aria-hidden="true"></i></a></div>';
+                            return '<div> '+full.name+' <a href="'+full.productUrl+'" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a></div>';
                         }
                     },
                     {

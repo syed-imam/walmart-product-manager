@@ -45,7 +45,7 @@ function buildModelData(response, next){
               salePrice: item.salePrice,
               mediumImage: item.mediumImage,
               brandName: item.brandName,
-              queryTime: (hours* 3600) + (minutes*60) + seconds,
+              queryTime: (hours* 3600) + (minutes*60) + (seconds * 1),
               productUrl: item.productUrl
           });
 
@@ -60,15 +60,15 @@ function buildModelData(response, next){
 
 function calculatePercentageOfBrands(req, res, next) {
 
-     var startTime=req.body.timeStart;
-     var limitTime=req.body.limitTime;
-     var searchQuery=req.body.searchQuery;
+     let startTime=req.body.timeStart;
+     let limitTime=req.body.limitTime;
+     let searchQuery=req.body.searchQuery;
      /*
          Queries mongoDB to return percentages of brands in search results within a given time range and a search query
       */
     Product.find({$or: [{queryTime: {$gte: startTime}}, {queryTime: {$lte: limitTime}}]}).count(function (err, numOfProductsInTimeRange){
           //Aggeregate query to get percentage of brands
-            Product.aggregate([{"$match": {"queryTime":{$lte: 60353, $gte: 2000}, "query":searchQuery}},
+            Product.aggregate([{"$match": {"queryTime":{$gte: startTime, $lte: limitTime}, "query":searchQuery}},
                 { "$group": { "_id": {"brandName":  "$brandName"}, "count": { "$sum": 1 }}},
                 { "$project": {"count": 1,"percentage": { "$multiply": [ { "$divide": [ "$count", {"$literal": numOfProductsInTimeRange }] }, 100 ]}}}
             ]).exec((err, productsPercentages) =>{
@@ -82,7 +82,6 @@ function calculatePercentageOfBrands(req, res, next) {
                              result.push(product);
                          }
                     }
-                    console.log(JSON.stringify(result));
                     res.send(JSON.stringify(result));
                 }
             });
@@ -92,19 +91,20 @@ function calculatePercentageOfBrands(req, res, next) {
 
 
 function calculatePercentageOfBrandsTop3Results(req, res, next) {
+    let startTime=req.body.timeStart;
+    let limitTime=req.body.limitTime;
+    let searchQuery=req.body.searchQuery;
 
-    Product.find({$or: [{queryTime: {$lte: 63102}}, {queryTime: {$gte: 4246635}}]}).count(function (err, numOfProductsInTimeRange){
-
+    Product.find({$or: [{queryTime: {$gte: startTime}}, {queryTime: {$lte: limitTime}}]}).count(function (err, numOfProductsInTimeRange){
            //Limit the search result to top 3
             const Limit=3;
-            Product.aggregate([{"$match": {'queryTime':{$gte: 60353, $lte: 61234},"query":"cereal"}}, {$limit : Limit},
+            Product.aggregate([{"$match": {'queryTime':{$gte: startTime, $lte: limitTime},"query": searchQuery}}, {$limit : Limit},
                 { "$group": { "_id": {"brandName":  "$brandName"}, "count": { "$sum": 1 }}},
-                { "$project": {"count": 1,"percentage": {"$concat": [ { "$substr": [ { "$multiply": [ { "$divide": [ "$count", {"$literal": Limit }] }, 100 ] }, 0,2 ] }, "", "%" ]}}}
+                { "$project": {"count": 1,"percentage": { "$multiply": [ { "$divide": [ "$count", {"$literal": Limit }] }, 100 ] }}}
             ]).exec((err, productsPercentages) =>{
                 if(err) throw err;
                 else {
-
-                    var result =[];
+                    let result =[];
                     for(let product of productsPercentages){
                         console.log(product._id.brandName);
                         if(product._id.brandName === "Cheerios" || product._id.brandName === "Post" || product._id.brandName === "Kellogg's" || product._id.brandName === "Kashi")
@@ -112,7 +112,6 @@ function calculatePercentageOfBrandsTop3Results(req, res, next) {
                             result.push(product);
                         }
                     }
-                    console.log(JSON.stringify(result));
                     res.send(JSON.stringify(result));
                 }
             });
