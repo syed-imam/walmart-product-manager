@@ -5,7 +5,6 @@
  * @param brandValue
  */
 function saveBrandValue(id, brandValue){
-    console.log(id, brandValue);
     var brandData={id: id, newBrand: brandValue}
 
     $.ajax({
@@ -14,6 +13,6 @@ function saveBrandValue(id, brandValue){
         data: brandData
     })
         .done(function(res){
-            console.log(res);
+            $("#submitModal").modal();
         });
 }

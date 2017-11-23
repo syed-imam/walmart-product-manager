@@ -11971,7 +11971,7 @@ var ProductsTable = function (_React$Component) {
                         "data": "brandName",
                         "render": function render(data, type, full) {
                             full.brandName = full.brandName === undefined ? 'Brand Name Not Available' : full.brandName;
-                            return '<div id="bs-example">' + ' <div class="row"><div class="col-md-8">' + '<input class="typeahead tt-query custom-query" autocomplete="on" spellcheck="false" value="' + full.brandName + '"/></div>' + '<div class="col-lg-4"><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" ' + 'class="btn btn-default btn-round-sm btn-sm save-button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>' + '</div>' + '</div>' + '</div>';
+                            return '<div id="bs-example">' + ' <div class="row"><div class="col-md-8">' + '<input class="typeahead tt-query custom-query" autocomplete="on" spellcheck="false" value="' + full.brandName + '"/></div>' + '<div class="col-lg-4"><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.parentNode.previousElementSibling.childNodes[0].childNodes[1].value)" ' + 'class="btn btn-default btn-round-sm btn-sm save-button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>' + '</div>' + '</div>' + '</div>';
                         }
                     }, {
                         "targets": 3,
@@ -12077,6 +12077,54 @@ var ProductsTable = function (_React$Component) {
                         )
                     ),
                     _react2.default.createElement('tbody', null)
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'modal fade', id: 'submitModal', role: 'dialog', 'aria-hidden': 'true' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'modal-dialog', role: 'document' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-content' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'modal-header' },
+                                _react2.default.createElement(
+                                    'h5',
+                                    { className: 'modal-title', id: 'exampleModalLabel' },
+                                    'Brand Update'
+                                ),
+                                _react2.default.createElement(
+                                    'button',
+                                    { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+                                    _react2.default.createElement(
+                                        'span',
+                                        { 'aria-hidden': 'true' },
+                                        '\xD7'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'modal-body' },
+                                _react2.default.createElement(
+                                    'h4',
+                                    null,
+                                    'Brand updated successfully'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'modal-footer' },
+                                _react2.default.createElement(
+                                    'button',
+                                    { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                                    'Close'
+                                )
+                            )
+                        )
+                    )
                 )
             );
         }

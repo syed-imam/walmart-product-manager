@@ -52,7 +52,7 @@ class ProductsTable extends React.Component{
                             return '<div id="bs-example">'+
                                    ' <div class="row"><div class="col-md-8">' +
                                           '<input class="typeahead tt-query custom-query" autocomplete="on" spellcheck="false" value="'+full.brandName+'"/></div>'+
-                                            '<div class="col-lg-4"><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" '+
+                                            '<div class="col-lg-4"><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.parentNode.previousElementSibling.childNodes[0].childNodes[1].value)" '+
                                                'class="btn btn-default btn-round-sm btn-sm save-button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>'+
                                            '</div>'+
                                         '</div>'+
@@ -143,7 +143,26 @@ render() {
                     <tbody>
                     </tbody>
                 </Table>
-            </div>
+
+                <div className="modal fade" id="submitModal" role="dialog" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Brand Update</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <h4>Brand updated successfully</h4>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
         );
     }
 }
