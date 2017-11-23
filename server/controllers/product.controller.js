@@ -71,27 +71,35 @@ function calculatePercentageOfBrands(req, res) {
      let startTime=req.body.timeStart;
      let limitTime=req.body.limitTime;
      let searchQuery=req.body.searchQuery;
-     /*
-         Queries mongoDB to return percentages of brands in search results within a given time range and a search query
-      */
+     let result = [];
+    /*
+        Queries mongoDB to return percentages of brands in search results within a given time range and a search query
+     */
     Product.find({$or: [{queryTime: {$gte: startTime}}, {queryTime: {$lte: limitTime}}]}).count(function (err, numOfProductsInTimeRange){
-          //Aggeregate query to get percentage of brands
-            Product.aggregate([{"$match": {"queryTime":{$gte: startTime, $lte: limitTime}, "query":searchQuery}},
-                { "$group": { "_id": {"brandName":  "$brandName"}, "count": { "$sum": 1 }}},
-                { "$project": {"count": 1,"percentage": { "$multiply": [ { "$divide": [ "$count", {"$literal": numOfProductsInTimeRange }] }, 100 ]}}}
-            ]).exec((err, productsPercentages) =>{
-                if(err) throw err;
-                else {
-                    var result =[];
-                    for(let product of productsPercentages){
-                         if(product._id.brandName === "Cheerios" || product._id.brandName === "Post" || product._id.brandName === "Kellogg's" || product._id.brandName === "Kashi")
-                         {
-                             result.push(product);
-                         }
-                    }
-                    res.send(JSON.stringify(result));
-                }
-            });
+          if(numOfProductsInTimeRange) {//Aggeregate query to get percentage of brands
+              Product.aggregate([{"$match": {"queryTime": {$gte: startTime, $lte: limitTime}, "query": searchQuery}},
+                  {"$group": {"_id": {"brandName": "$brandName"}, "count": {"$sum": 1}}},
+                  {
+                      "$project": {
+                          "count": 1,
+                          "percentage": {"$multiply": [{"$divide": ["$count", {"$literal": numOfProductsInTimeRange}]}, 100]}
+                      }
+                  }
+              ]).exec((err, productsPercentages) => {
+                  if (err) throw err;
+                  else {
+                      for (let product of productsPercentages) {
+                          if (product._id.brandName === "Cheerios" || product._id.brandName === "Post" || product._id.brandName === "Kellogg's" || product._id.brandName === "Kashi") {
+                              result.push(product);
+                          }
+                      }
+                      res.send(JSON.stringify(result));
+                  }
+              });
+          }
+          else{
+              res.send(JSON.stringify(result));
+          }
         }
     )
 }
@@ -105,8 +113,10 @@ function calculatePercentageOfBrandsTop3Results(req, res) {
     let startTime=req.body.timeStart;
     let limitTime=req.body.limitTime;
     let searchQuery=req.body.searchQuery;
+    let result =[];
 
     Product.find({$or: [{queryTime: {$gte: startTime}}, {queryTime: {$lte: limitTime}}]}).count(function (err, numOfProductsInTimeRange){
+         if(numOfProductsInTimeRange){
            //Limit the search result to top 3
             const Limit=3;
             Product.aggregate([{"$match": {'queryTime':{$gte: startTime, $lte: limitTime},"query": searchQuery}}, {$limit : Limit},
@@ -115,7 +125,6 @@ function calculatePercentageOfBrandsTop3Results(req, res) {
             ]).exec((err, productsPercentages) =>{
                 if(err) throw err;
                 else {
-                    let result =[];
                     for(let product of productsPercentages){
                         if(product._id.brandName === "Cheerios" || product._id.brandName === "Post" || product._id.brandName === "Kellogg's" || product._id.brandName === "Kashi")
                         {
@@ -125,6 +134,10 @@ function calculatePercentageOfBrandsTop3Results(req, res) {
                     res.send(JSON.stringify(result));
                 }
             });
+         }
+         else{
+             res.send(JSON.stringify(result));
+         }
         }
     )
 }

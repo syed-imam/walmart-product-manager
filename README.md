@@ -24,6 +24,8 @@ Tab 2 (Brand Statistics) renders the brand statistics <br>
 Note: Initial render of this page will generate percentages with default params(query="cereal", startTime=00:00:00, limitTime=23:59:59, all search results)
 ![Alt text](https://s3.amazonaws.com/adil-static-test/page2.png "Products Table");
 
+Queries can be modified! inside function queryWalmartApi in file server/controllers/product.controller.js
+
 ## Authors
 * **Syed Adil Imam** - [author](http://syedadilimam.com/)
 

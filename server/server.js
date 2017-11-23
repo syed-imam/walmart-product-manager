@@ -30,6 +30,6 @@ mongoose.connection.on('error', () => {
     throw new Error(`unable to connect to database: ${mongoUrl}`);
 });
 
-cron.schedule('00 59 * * * *', productCtrl.queryWalmartApi); //cron job runs every ten minutes
+cron.schedule('0 */45 * * * *', productCtrl.queryWalmartApi); //cron job runs every 45 minutes
 
 export default app;

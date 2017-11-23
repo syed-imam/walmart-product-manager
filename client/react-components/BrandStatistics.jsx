@@ -28,16 +28,22 @@ class BrandStatistics extends React.Component {
         }
         let startTime = (this.timeStartHours.value * 3600) + (this.timeStartMinutes.value) * 60 + (this.timeStartSeconds.value * 1);
         let limitTime = (this.timeLimitHours.value * 3600) + (this.timeLimitMinutes.value * 60) + (this.timeLimitSeconds.value * 1);
-        let searchQuery = this.query.value;
-        let endpoint1='/percentage-of-brands-in-top3-search-results';
-        let endpoint2='/percentage-of-brands';
-        if (this.top3results.checked) {
-            this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint1);
+        if(startTime<limitTime) {
+            let searchQuery = this.query.value;
+            let endpoint1 = '/percentage-of-brands-in-top3-search-results';
+            let endpoint2 = '/percentage-of-brands';
+            if (this.top3results.checked) {
+                this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint1);
+            }
+            else {
+                this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint2);
+            }
         }
         else{
-            this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint2);
+            $("#errorModal").modal();
         }
     }
+
     generateQueryOptions(){
         let queries=['cereal', 'cold cereal'];
         let queryOptions=[];
@@ -108,7 +114,6 @@ class BrandStatistics extends React.Component {
 
 
     render() {
-console.log("I am here");
        return (
             <div>
                 <div className="well">
@@ -186,6 +191,25 @@ console.log("I am here");
                    <div className="row">
                     {this.generateBrandsList()}
                   </div>
+                </div>
+
+                <div className="modal fade" id="errorModal" role="dialog" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Limit Error</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <h4>Limit time has to be greater than Start time</h4>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
