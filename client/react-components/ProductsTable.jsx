@@ -6,7 +6,6 @@ class ProductsTable extends React.Component{
 
     constructor(props){
         super();
-        console.log(props);
     }
 
     componentWillMount(){
@@ -15,7 +14,6 @@ class ProductsTable extends React.Component{
             axios.get('/request-walmart-products')
         ]).then(axios.spread((res1, res2) => {
             let brandsResult=res1.data;
-            console.log(brandsResult);
             let productSet=res2.data;
 
             //Generating table from Datatables
@@ -30,12 +28,11 @@ class ProductsTable extends React.Component{
                         return '<img height="48px" width="48px" src="'+data+'"/>';
                     }},
                     {
-                        "targets" : 4,
+                        "targets" : 6,
                         "data": "customerRatingImage",
                         "render" : function (data, type, full) {
                             if(data === undefined){
-                                data='../img/img-not-found.jpg';
-                                return '<img height="40%" width="15%" src="'+data+'"/>';
+                                return '<div style="margin-left:15%" class="text-justify text-danger">None<div>';
                             }
                             else{
                                 return '<img height="100%" width="80%" src="'+data+'"/>';
@@ -49,19 +46,44 @@ class ProductsTable extends React.Component{
                     },
                     {
                         "targets": 2,
+                         "data":"brandName",
                         "render": function (data, type, full) {
                             full.brandName= full.brandName === undefined ? 'Brand Name Not Available' : full.brandName;
-                            return '<div id="bs-example" style="float:left"> <input class="typeahead tt-query" autocomplete="on" spellcheck="false" value="'+full.brandName+'"/><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" style="background-color:#101010cc; border:radius:10%; margin-left: 2px; color:white;" class="btn btn-default btn-round-sm btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div>';
+                            return '<div id="bs-example">'+
+                                   ' <div class="row"><div class="col-md-8">' +
+                                          '<input class="typeahead tt-query custom-query" autocomplete="on" spellcheck="false" value="'+full.brandName+'"/></div>'+
+                                            '<div class="col-lg-4"><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" '+
+                                               'class="btn btn-default btn-round-sm btn-sm save-button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>'+
+                                           '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                        }
+                    },
+                    {
+                        "targets":3,
+                        "data":"salePrice",
+                        "render": function (data, type, full) {
+                            data=data === undefined ? '<div style="margin-left:5%" class="text-justify text-danger">None<div>' : '$'+data;
+                            return '<div>'+data+'</div>';
+                        }
+                    },
+                    {
+                        "targets":4,
+                        "data":"msrp",
+                        "render": function (data, type, full) {
+                            data=data === undefined ? '<div style="margin-left:5%" class="text-justify text-danger">None<div>' : '$'+data;
+                            return '<div>'+data+'</div>';
                         }
                     }
                 ],
                 columns: [
                     { data: "mediumImage" },
                     { data: "name" },
-                    { data: "brandName" },
+                    { data: "brandName"},
                     { data: "salePrice" },
+                    { data: "msrp"},
+                    { data: "query"},
                     { data: "customerRatingImage"},
-                    { data: "query"}
                 ]
             });
 
@@ -112,9 +134,10 @@ render() {
                         <th scope="col">Product</th>
                         <th scope="col">Name</th>
                         <th scope="col">Brand name</th>
-                        <th scope="col">Query Time</th>
-                        <th scope="col">Customer Ratings</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">MSRP</th>
                         <th scope="col">Search Term</th>
+                        <th scope="col">Rating</th>
                     </tr>
                     </thead>
                     <tbody>

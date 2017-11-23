@@ -11635,7 +11635,7 @@ var BrandStatistics = function (_React$Component) {
                             { className: 'form-group col-md-3' },
                             _react2.default.createElement(
                                 'label',
-                                { className: 'text-justify text-center' },
+                                { className: 'time-text' },
                                 'Time Start'
                             ),
                             _react2.default.createElement(
@@ -11696,7 +11696,7 @@ var BrandStatistics = function (_React$Component) {
                             { className: 'form-group col-md-3' },
                             _react2.default.createElement(
                                 'label',
-                                null,
+                                { className: 'time-text' },
                                 'Time Limit'
                             ),
                             _react2.default.createElement(
@@ -11931,10 +11931,7 @@ var ProductsTable = function (_React$Component) {
     function ProductsTable(props) {
         _classCallCheck(this, ProductsTable);
 
-        var _this = _possibleConstructorReturn(this, (ProductsTable.__proto__ || Object.getPrototypeOf(ProductsTable)).call(this));
-
-        console.log(props);
-        return _this;
+        return _possibleConstructorReturn(this, (ProductsTable.__proto__ || Object.getPrototypeOf(ProductsTable)).call(this));
     }
 
     _createClass(ProductsTable, [{
@@ -11942,7 +11939,6 @@ var ProductsTable = function (_React$Component) {
         value: function componentWillMount() {
             _axios2.default.all([_axios2.default.get('/request-walmart-brands'), _axios2.default.get('/request-walmart-products')]).then(_axios2.default.spread(function (res1, res2) {
                 var brandsResult = res1.data;
-                console.log(brandsResult);
                 var productSet = res2.data;
 
                 //Generating table from Datatables
@@ -11956,12 +11952,11 @@ var ProductsTable = function (_React$Component) {
                             data = data === undefined ? '../img/img-not-found.jpg' : data;
                             return '<img height="48px" width="48px" src="' + data + '"/>';
                         } }, {
-                        "targets": 4,
+                        "targets": 6,
                         "data": "customerRatingImage",
                         "render": function render(data, type, full) {
                             if (data === undefined) {
-                                data = '../img/img-not-found.jpg';
-                                return '<img height="40%" width="15%" src="' + data + '"/>';
+                                return '<div style="margin-left:15%" class="text-justify text-danger">None<div>';
                             } else {
                                 return '<img height="100%" width="80%" src="' + data + '"/>';
                             }
@@ -11973,12 +11968,27 @@ var ProductsTable = function (_React$Component) {
                         }
                     }, {
                         "targets": 2,
+                        "data": "brandName",
                         "render": function render(data, type, full) {
                             full.brandName = full.brandName === undefined ? 'Brand Name Not Available' : full.brandName;
-                            return '<div id="bs-example" style="float:left"> <input class="typeahead tt-query" autocomplete="on" spellcheck="false" value="' + full.brandName + '"/><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" style="background-color:#101010cc; border:radius:10%; margin-left: 2px; color:white;" class="btn btn-default btn-round-sm btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div>';
+                            return '<div id="bs-example">' + ' <div class="row"><div class="col-md-8">' + '<input class="typeahead tt-query custom-query" autocomplete="on" spellcheck="false" value="' + full.brandName + '"/></div>' + '<div class="col-lg-4"><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.previousElementSibling.childNodes[1].value)" ' + 'class="btn btn-default btn-round-sm btn-sm save-button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>' + '</div>' + '</div>' + '</div>';
+                        }
+                    }, {
+                        "targets": 3,
+                        "data": "salePrice",
+                        "render": function render(data, type, full) {
+                            data = data === undefined ? '<div style="margin-left:5%" class="text-justify text-danger">None<div>' : '$' + data;
+                            return '<div>' + data + '</div>';
+                        }
+                    }, {
+                        "targets": 4,
+                        "data": "msrp",
+                        "render": function render(data, type, full) {
+                            data = data === undefined ? '<div style="margin-left:5%" class="text-justify text-danger">None<div>' : '$' + data;
+                            return '<div>' + data + '</div>';
                         }
                     }],
-                    columns: [{ data: "mediumImage" }, { data: "name" }, { data: "brandName" }, { data: "salePrice" }, { data: "customerRatingImage" }, { data: "query" }]
+                    columns: [{ data: "mediumImage" }, { data: "name" }, { data: "brandName" }, { data: "salePrice" }, { data: "msrp" }, { data: "query" }, { data: "customerRatingImage" }]
                 });
 
                 // Constructing the suggestion engine
@@ -12047,17 +12057,22 @@ var ProductsTable = function (_React$Component) {
                             _react2.default.createElement(
                                 'th',
                                 { scope: 'col' },
-                                'Query Time'
+                                'Price'
                             ),
                             _react2.default.createElement(
                                 'th',
                                 { scope: 'col' },
-                                'Customer Ratings'
+                                'MSRP'
                             ),
                             _react2.default.createElement(
                                 'th',
                                 { scope: 'col' },
                                 'Search Term'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                { scope: 'col' },
+                                'Rating'
                             )
                         )
                     ),

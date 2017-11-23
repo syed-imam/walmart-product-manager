@@ -115,7 +115,7 @@ console.log("I am here");
                 <div className="well">
                   <div className="row">
                         <div className="form-group col-md-3">
-                        <label className="text-justify text-center">Time Start</label>
+                        <label className="time-text">Time Start</label>
                         <div className="row">
                           <div className="col-md-4">
                               <label className="font-weight-light">Hour</label>
@@ -139,7 +139,7 @@ console.log("I am here");
                     </div>
 
                     <div className="form-group col-md-3">
-                        <label>Time Limit</label>
+                        <label className="time-text">Time Limit</label>
                         <div className="row">
                             <div className="col-md-4">
                                 <label className="font-weight-light">Hour</label>

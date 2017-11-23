@@ -62,8 +62,10 @@ input .twitter-typeahead{
 
 .bs-example {
     font-family: sans-serif;
-    position: relative;
+    position: absolute;
     margin: 100px;
+    width: 500px;
+    float:left;
 }
 
 
@@ -71,11 +73,11 @@ input .twitter-typeahead{
     border: 2px solid #CCCCCC;
     border-radius: 8px;
     font-size: 16px;
-    height: 25px;
+    height: 30px;
     line-height: 30px;
     outline: medium none;
     padding: 8px 12px;
-    width: 150px;
+    width: 140px;
 }
 .typeahead {
     background-color: #FFFFFF;
@@ -101,7 +103,7 @@ span .twitter-typeahead > span .twitter-typeahead{
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     margin-top: 12px;
     padding: 8px 0;
-    width: 422px;
+    width: 322px;
 }
 .tt-suggestion {
     font-size: 22px;  /* Set suggestion dropdown font size */
@@ -151,11 +153,37 @@ h1{
     margin-top:5%;
 }
 
-span .twitter-typeahead{
-    width:70%;
+#bs-example .twitter-typeahead{
+    max-width:70%;
+    display: inline-block;
 }
+.save-button{
+    max-width:100%;
+    max-height: 90%;
+    margin-left: 12%;
+    display: inline-block;
+    background-color:#101010cc;
+    border-radius:10%;
+    color:white;
+}
+
 
 .brands-stats{
 margin-top: 10%;
 }
+.time-text{
+    margin-left: 30%;
+}
+.font-weight-light{
+    font-weight: 100!important;
+    margin-left: 30%;
+}
+/*
+.custom-query{
+}
 
+#bs-example{
+    width:100%;
+    float:left;
+}
+*/
