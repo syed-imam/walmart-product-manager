@@ -1,9 +1,9 @@
 # Walmart Product Manager
-Walmart Product Manager is a full stack application that enables automated data collection from walmart API and provides useful user interface to the research team.
+Walmart Product Manager is a full stack web application that enables automated data collection from walmart API and provides useful user interface to the research team.
 ## Features
 1. Node cron job which queries the walmart API in fixed interval of time.
-2. Data persisted inside MongoDB.
-3. Complete searchable and sortable products table which presents information about products with editable brandNames.
+2. Data retrieved from Walmart API persisted inside MongoDB.
+3. Complete searchable and sortable products table presenting information about products with editable brandNames and auto suggestion of brands.
 4. Statistics on top search brands in Walmart API.
 ### Prerequisites
 Need to have node and npm installed.
@@ -19,7 +19,7 @@ Simple 3 steps
 
 
 ## Authors
-* **Syed Adil Imam** - [author](https://github.com/adilimam1993)
+* **Syed Adil Imam** - [author](http://syedadilimam.com/)
 
 
 
