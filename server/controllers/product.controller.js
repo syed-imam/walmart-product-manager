@@ -10,7 +10,12 @@ const walmartApiEndpoint=config.walmartSearchAPI.apiEndPoint;
 const walmartApiKey=config.walmartSearchAPI.apiKey;
 
 
-function queryWalmartApi(req, res, next){
+/**
+ * Queries Walmart API and persists retrieved data into MongoDB collection called products
+ * @param req
+ * @param res
+ */
+function queryWalmartApi(req, res){
 
     let search1="cereal";
     let search2="cold+cereal";
@@ -57,8 +62,12 @@ function buildModelData(response, next){
       }
   }
 }
-
-function calculatePercentageOfBrands(req, res, next) {
+/**
+ * Calculate percentage of given Brands which appear in all search results
+ * @param req
+ * @param res
+ */
+function calculatePercentageOfBrands(req, res) {
 
      let startTime=req.body.timeStart;
      let limitTime=req.body.limitTime;
@@ -76,7 +85,6 @@ function calculatePercentageOfBrands(req, res, next) {
                 else {
                     var result =[];
                     for(let product of productsPercentages){
-                       console.log(product._id.brandName);
                          if(product._id.brandName === "Cheerios" || product._id.brandName === "Post" || product._id.brandName === "Kellogg's" || product._id.brandName === "Kashi")
                          {
                              result.push(product);
@@ -89,8 +97,12 @@ function calculatePercentageOfBrands(req, res, next) {
     )
 }
 
-
-function calculatePercentageOfBrandsTop3Results(req, res, next) {
+/**
+ * Calculate the percentage of given brands which appear in top 3 search results
+ * @param req
+ * @param res
+ */
+function calculatePercentageOfBrandsTop3Results(req, res) {
     let startTime=req.body.timeStart;
     let limitTime=req.body.limitTime;
     let searchQuery=req.body.searchQuery;
@@ -106,7 +118,6 @@ function calculatePercentageOfBrandsTop3Results(req, res, next) {
                 else {
                     let result =[];
                     for(let product of productsPercentages){
-                        console.log(product._id.brandName);
                         if(product._id.brandName === "Cheerios" || product._id.brandName === "Post" || product._id.brandName === "Kellogg's" || product._id.brandName === "Kashi")
                         {
                             result.push(product);
@@ -119,15 +130,24 @@ function calculatePercentageOfBrandsTop3Results(req, res, next) {
     )
 }
 
+/**
+ * Retrieves the list of products from MongoDB
+ * @param req
+ * @param res
+ */
 function requestProducts(req, res){
        Product.find({}, function(err, response){
               res.send(JSON.stringify(response));
         });
 }
 
+/**
+ * Function returns the unique brands found in MongoDB
+ * @param req
+ * @param res
+ */
 function requestUniqueBrands(req, res){
     Product.distinct("brandName", function(err, response){
-        console.log(response);
         res.send(JSON.stringify(response));
     });
 }

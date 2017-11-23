@@ -10,7 +10,7 @@ const router= express.Router();
 
 router.use(bodyParser.json());
 
-// to support URL-encoded bodies
+// parse URL-encoded bodies
 router.use(bodyParser.urlencoded({
     extended: true
 }));
