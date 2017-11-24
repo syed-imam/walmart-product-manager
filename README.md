@@ -29,7 +29,7 @@ Application uses Node and Express for the backend functionality. Additionally it
 ### How to Use it
 There are 2 tabs on the index page <br>
 <br>
-Tab 1 shows the Products Table 
+Tab 1 renders the Products Table 
 1. Products table is loaded and displayed with editable brand name.
 2. Editing and saving the changed brand name updates the brand name of the corresponding product in the database.
 3. Table is searchable with any keyword.
