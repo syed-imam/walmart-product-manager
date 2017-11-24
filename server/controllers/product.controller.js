@@ -88,12 +88,14 @@ function calculatePercentageOfBrands(req, res) {
               ]).exec((err, productsPercentages) => {
                   if (err) throw err;
                   else {
+                      /*
                       for (let product of productsPercentages) {
                           if (product._id.brandName === "Cheerios" || product._id.brandName === "Post" || product._id.brandName === "Kellogg's" || product._id.brandName === "Kashi") {
                               result.push(product);
                           }
                       }
-                      res.send(JSON.stringify(result));
+                      */
+                      res.send(JSON.stringify(productsPercentages));
                   }
               });
           }
@@ -186,4 +188,23 @@ function updateBrandName(req, res){
    });
 }
 
-export default {queryWalmartApi, calculatePercentageOfBrands, calculatePercentageOfBrandsTop3Results, requestProducts, requestUniqueBrands, updateBrandName};
+function manualQueryWalmartApi(req, res, next){
+
+    let search1="cereal";
+    let search2="cold+cereal";
+    axios.all([
+        axios.get(walmartApiEndpoint+"?query="+search1+"&format=json&responseGroup=full&facet=on&apiKey="+walmartApiKey),
+        axios.get(walmartApiEndpoint+"?query="+search2+"&format=json&responseGroup=full&facet=on&apiKey="+walmartApiKey)
+    ]).then(axios.spread((result1, result2) => {
+
+        var response=[result1.data,result2.data];
+        buildModelData(response, next);
+        res.send("Success");
+    })).catch(error => {
+        console.log(error);
+    });
+}
+
+
+
+export default {queryWalmartApi, manualQueryWalmartApi, calculatePercentageOfBrands, calculatePercentageOfBrandsTop3Results, requestProducts, requestUniqueBrands, updateBrandName};

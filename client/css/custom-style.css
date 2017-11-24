@@ -85,10 +85,11 @@ h1{
 }
 
 .query-class{
-    margin-top:5%;
+    margin-top:13%;
 }
 .top-3-result{
-    margin-top:35%;
+    margin-top:22%;
+    margin-left:10%;
 }
 
 .submit-button{
@@ -113,9 +114,7 @@ h1{
 .brands-stats{
 margin-top: 10%;
 }
-.time-text{
-    margin-left: 30%;
-}
+
 .font-weight-light{
     font-weight: 100!important;
     margin-left: 30%;
@@ -140,4 +139,10 @@ margin-top: 10%;
 
 .brand-headings{
     margin-left: 30%;
+}
+
+.btn-green{
+    background-color: #5fd400;
+    color: white;
+    align: right;
 }

@@ -11380,7 +11380,8 @@ var BrandStatistics = function (_React$Component) {
                 brand3: "Kellogg's",
                 brand4: "Post"
             },
-            brandStats: []
+            brandStats: [],
+            brandOptions: []
         };
         _this.submitStatisticsQuery = _this.submitStatisticsQuery.bind(_this);
         return _this;
@@ -11389,7 +11390,25 @@ var BrandStatistics = function (_React$Component) {
     _createClass(BrandStatistics, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
+            this.generateBrandOptions();
             this.buildBrandsStatList(0, 86399, "cereal", "/percentage-of-brands");
+        }
+    }, {
+        key: 'handleChange',
+        value: function handleChange(number, event) {
+            switch (number) {
+                case 1:
+                    this.setState({ brandNames: { brand1: event.target.value, brand2: this.state.brandNames.brand2, brand3: this.state.brandNames.brand3, brand4: this.state.brandNames.brand4 } });
+                    break;
+                case 2:
+                    this.setState({ brandNames: { brand1: this.state.brandNames.brand1, brand2: event.target.value, brand3: this.state.brandNames.brand3, brand4: this.state.brandNames.brand4 } });
+                    break;
+                case 3:
+                    this.setState({ brandNames: { brand1: this.state.brandNames.brand1, brand2: this.state.brandNames.brand2, brand3: event.target.value, brand4: this.state.brandNames.brand4 } });
+                    break;
+                case 4:
+                    this.setState({ brandNames: { brand1: this.state.brandNames.brand1, brand2: this.state.brandNames.brand2, brand3: this.state.brandNames.brand3, brand4: event.target.value } });
+            }
         }
     }, {
         key: 'submitStatisticsQuery',
@@ -11397,18 +11416,25 @@ var BrandStatistics = function (_React$Component) {
             if (e) {
                 e.preventDefault();
             }
-            var startTime = this.timeStartHours.value * 3600 + this.timeStartMinutes.value * 60 + this.timeStartSeconds.value * 1;
-            var limitTime = this.timeLimitHours.value * 3600 + this.timeLimitMinutes.value * 60 + this.timeLimitSeconds.value * 1;
-            if (startTime < limitTime) {
-                var searchQuery = this.query.value;
-                var endpoint1 = '/percentage-of-brands-in-top3-search-results';
-                var endpoint2 = '/percentage-of-brands';
-                if (this.top3results.checked) {
-                    this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint1);
+            //Make sure brands are unique
+            if (this.state.brandNames.brand1 !== this.state.brandNames.brand2 && this.state.brandNames.brand1 !== this.state.brandNames.brand3 && this.state.brandNames.brand1 !== this.state.brandNames.brand4 && this.state.brandNames.brand2 !== this.state.brandNames.brand3 && this.state.brandNames.brand2 !== this.state.brandNames.brand4 && this.state.brandNames.brand3 !== this.state.brandNames.brand4) {
+                var startTime = this.timeStartHours.value * 3600 + this.timeStartMinutes.value * 60 + this.timeStartSeconds.value * 1;
+                var limitTime = this.timeLimitHours.value * 3600 + this.timeLimitMinutes.value * 60 + this.timeLimitSeconds.value * 1;
+                if (startTime < limitTime) {
+                    var searchQuery = this.query.value;
+                    var endpoint1 = '/percentage-of-brands-in-top3-search-results';
+                    var endpoint2 = '/percentage-of-brands';
+                    if (this.top3results.checked) {
+                        this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint1);
+                    } else {
+                        this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint2);
+                    }
                 } else {
-                    this.buildBrandsStatList(startTime, limitTime, searchQuery, endpoint2);
+                    $(".modal-body").html("<h4>Limit time has to be greater than Start time</h4>");
+                    $("#errorModal").modal();
                 }
             } else {
+                $(".modal-body").html("<h4>Brands are not unique</h4>");
                 $("#errorModal").modal();
             }
         }
@@ -11453,6 +11479,36 @@ var BrandStatistics = function (_React$Component) {
             return time;
         }
     }, {
+        key: 'generateBrandOptions',
+        value: function generateBrandOptions() {
+            var brandOptionsAjax = [];
+            _axios2.default.get('/request-walmart-brands').then(function (response) {
+                var brandList = response.data;
+                for (var i = 0; i < brandList.length; i++) {
+                    brandOptionsAjax.push(_react2.default.createElement(
+                        'option',
+                        { key: i, value: brandList[i] },
+                        ' ',
+                        brandList[i],
+                        ' '
+                    ));
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            this.setState({
+                brandNames: {
+                    brand1: "Cheerios",
+                    brand2: "Kashi",
+                    brand3: "Kellogg's",
+                    brand4: "Post"
+                },
+                brandStats: [],
+                brandOptions: brandOptionsAjax
+            });
+        }
+    }, {
         key: 'generateBrandsList',
         value: function generateBrandsList() {
             var brands = this.state.brandStats;
@@ -11489,8 +11545,6 @@ var BrandStatistics = function (_React$Component) {
                 var brandStatisticsArray = [];
                 var brandNames = _this2.state.brandNames;
                 for (var brandName in brandNames) {
-                    console.log(brandName, brandNames[brandName]);
-
                     var brandResult = response.data.find(function (brand) {
                         return brand._id.brandName === brandNames[brandName];
                     });
@@ -11517,6 +11571,66 @@ var BrandStatistics = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'well' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'row' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group col-md-3' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: '' },
+                                'Brand 1'
+                            ),
+                            _react2.default.createElement(
+                                'select',
+                                { id: 'brand1', className: 'form-control', value: this.state.brandNames.brand1, onChange: this.handleChange.bind(this, 1) },
+                                this.state.brandOptions
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group col-md-3' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: '' },
+                                'Brand 2'
+                            ),
+                            _react2.default.createElement(
+                                'select',
+                                { id: 'inputState', className: 'form-control', value: this.state.brandNames.brand2, onChange: this.handleChange.bind(this, 2) },
+                                this.state.brandOptions
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group col-md-3' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: '' },
+                                'Brand 3'
+                            ),
+                            _react2.default.createElement(
+                                'select',
+                                { id: 'inputState', className: 'form-control', value: this.state.brandNames.brand3, onChange: this.handleChange.bind(this, 3) },
+                                this.state.brandOptions
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group col-md-3' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'time-text' },
+                                'Brand 4'
+                            ),
+                            _react2.default.createElement(
+                                'select',
+                                { id: 'inputState', className: 'form-control', value: this.state.brandNames.brand4, onChange: this.handleChange.bind(this, 4) },
+                                this.state.brandOptions
+                            )
+                        )
+                    ),
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
@@ -11645,10 +11759,14 @@ var BrandStatistics = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'form-group col-md-2' },
-                            _react2.default.createElement('br', null),
                             _react2.default.createElement(
                                 'div',
                                 { className: 'row' },
+                                _react2.default.createElement(
+                                    'label',
+                                    { className: 'time-text' },
+                                    'Query Term'
+                                ),
                                 _react2.default.createElement('br', null),
                                 _react2.default.createElement(
                                     'select',
@@ -11661,7 +11779,7 @@ var BrandStatistics = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'form-check col-md-2' },
+                            { className: 'form-check col-md-3' },
                             _react2.default.createElement(
                                 'label',
                                 { className: 'form-check-label top-3-result' },
@@ -11673,7 +11791,7 @@ var BrandStatistics = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'form-group col-md-2' },
+                            { className: 'form-group col-md-1' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'row' },
@@ -11705,11 +11823,11 @@ var BrandStatistics = function (_React$Component) {
                             { className: 'modal-content' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'modal-header' },
+                                { className: 'modal-header alert alert-danger' },
                                 _react2.default.createElement(
                                     'h5',
                                     { className: 'modal-title', id: 'exampleModalLabel' },
-                                    'Limit Error'
+                                    'Alert'
                                 ),
                                 _react2.default.createElement(
                                     'button',
@@ -11721,15 +11839,7 @@ var BrandStatistics = function (_React$Component) {
                                     )
                                 )
                             ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'modal-body' },
-                                _react2.default.createElement(
-                                    'h4',
-                                    null,
-                                    'Limit time has to be greater than Start time'
-                                )
-                            ),
+                            _react2.default.createElement('div', { className: 'modal-body' }),
                             _react2.default.createElement(
                                 'div',
                                 { className: 'modal-footer' },
@@ -12025,7 +12135,7 @@ var ProductsTable = function (_React$Component) {
                             { className: 'modal-content' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'modal-header' },
+                                { className: 'modal-header alert alert-success' },
                                 _react2.default.createElement(
                                     'h5',
                                     { className: 'modal-title', id: 'exampleModalLabel' },
@@ -12041,15 +12151,7 @@ var ProductsTable = function (_React$Component) {
                                     )
                                 )
                             ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'modal-body' },
-                                _react2.default.createElement(
-                                    'h4',
-                                    null,
-                                    'Brand updated successfully'
-                                )
-                            ),
+                            _react2.default.createElement('div', { className: 'modal-body success-modal' }),
                             _react2.default.createElement(
                                 'div',
                                 { className: 'modal-footer' },

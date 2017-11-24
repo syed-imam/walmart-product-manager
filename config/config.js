@@ -12,6 +12,7 @@ const config={
     mongoDB:{
       host:  process.env.MONGO_HOST,
       port:  process.env.MONGO_PORT
-    }
+    },
+    cronJobDuration: '0 */20 * * * *'  //execute cron job every 20 minutes
 }
 export default config;

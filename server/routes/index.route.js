@@ -22,6 +22,8 @@ router.get('/', (req, res) =>
 
 router.post('/walmart-search-api',productCtrl.queryWalmartApi);
 
+router.post('/manual-walmart-search-api',productCtrl.manualQueryWalmartApi);
+
 router.post('/percentage-of-brands',productCtrl.calculatePercentageOfBrands);
 
 router.post('/percentage-of-brands-in-top3-search-results',productCtrl.calculatePercentageOfBrandsTop3Results);

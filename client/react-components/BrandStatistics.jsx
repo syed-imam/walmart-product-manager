@@ -13,19 +13,43 @@ class BrandStatistics extends React.Component {
                 brand3: "Kellogg's",
                 brand4: "Post",
             },
-            brandStats:[]
+            brandStats:[],
+            brandOptions:[]
         };
         this.submitStatisticsQuery = this.submitStatisticsQuery.bind(this);
     }
 
     componentWillMount(){
-          this.buildBrandsStatList(0, 86399, "cereal","/percentage-of-brands");
+        this.generateBrandOptions();
+        this.buildBrandsStatList(0, 86399, "cereal","/percentage-of-brands");
     }
+
+    handleChange(number, event){
+        switch(number){
+            case 1:
+                this.setState({brandNames:{brand1:event.target.value, brand2:this.state.brandNames.brand2, brand3:this.state.brandNames.brand3, brand4:this.state.brandNames.brand4}});
+                break;
+            case 2:
+                this.setState({brandNames:{brand1:this.state.brandNames.brand1, brand2:event.target.value, brand3:this.state.brandNames.brand3, brand4:this.state.brandNames.brand4}})
+                break;
+            case 3:
+                this.setState({brandNames:{brand1:this.state.brandNames.brand1, brand2:this.state.brandNames.brand2, brand3:event.target.value, brand4:this.state.brandNames.brand4}})
+                break;
+            case 4:
+                this.setState({brandNames:{brand1:this.state.brandNames.brand1, brand2:this.state.brandNames.brand2, brand3:this.state.brandNames.brand3, brand4:event.target.value}})
+        }
+    }
+
 
     submitStatisticsQuery(e) {
         if (e) {
             e.preventDefault();
         }
+     //Make sure brands are unique
+        if(this.state.brandNames.brand1 !== this.state.brandNames.brand2 && this.state.brandNames.brand1 !== this.state.brandNames.brand3 &&
+            this.state.brandNames.brand1 !== this.state.brandNames.brand4 && this.state.brandNames.brand2 !== this.state.brandNames.brand3 &&
+            this.state.brandNames.brand2 !== this.state.brandNames.brand4 && this.state.brandNames.brand3 !== this.state.brandNames.brand4)
+        {
         let startTime = (this.timeStartHours.value * 3600) + (this.timeStartMinutes.value) * 60 + (this.timeStartSeconds.value * 1);
         let limitTime = (this.timeLimitHours.value * 3600) + (this.timeLimitMinutes.value * 60) + (this.timeLimitSeconds.value * 1);
         if(startTime<limitTime) {
@@ -40,6 +64,12 @@ class BrandStatistics extends React.Component {
             }
         }
         else{
+            $(".modal-body").html("<h4>Limit time has to be greater than Start time</h4>");
+            $("#errorModal").modal();
+        }
+        }
+        else{
+            $(".modal-body").html("<h4>Brands are not unique</h4>")
             $("#errorModal").modal();
         }
     }
@@ -69,6 +99,32 @@ class BrandStatistics extends React.Component {
         return time;
     }
 
+    generateBrandOptions(){
+        let brandOptionsAjax=[];
+        axios.get('/request-walmart-brands')
+            .then(function (response) {
+                let brandList=response.data;
+                for(var i=0; i<brandList.length; i++){
+                    brandOptionsAjax.push(<option key={i} value={brandList[i]}> {brandList[i]} </option>);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        this.setState({
+            brandNames:{
+                brand1: "Cheerios",
+                brand2: "Kashi",
+                brand3: "Kellogg's",
+                brand4: "Post",
+            },
+            brandStats:[],
+            brandOptions: brandOptionsAjax
+        });
+
+    }
+
     generateBrandsList(){
         let brands = this.state.brandStats;
         let brandsList= brands.map((brand)=>{
@@ -92,9 +148,7 @@ class BrandStatistics extends React.Component {
                 var brandStatisticsArray=[];
                 let brandNames=this.state.brandNames;
                 for (var brandName in brandNames) {
-                    console.log(brandName, brandNames[brandName]);
-
-                    var brandResult = response.data.find(function(brand){
+                        var brandResult = response.data.find(function(brand){
                         return brand._id.brandName === brandNames[brandName];
                     });
 
@@ -113,10 +167,39 @@ class BrandStatistics extends React.Component {
     }
 
 
+
     render() {
+
        return (
             <div>
                 <div className="well">
+                    <div className="row">
+                        <div className="form-group col-md-3">
+                            <label className="">Brand 1</label>
+                            <select id="brand1" className="form-control" value={this.state.brandNames.brand1}  onChange={this.handleChange.bind(this,1)}>
+                                {this.state.brandOptions}
+                            </select>
+                        </div>
+
+                        <div className="form-group col-md-3">
+                            <label className="">Brand 2</label>
+                            <select id="inputState" className="form-control" value={this.state.brandNames.brand2} onChange={this.handleChange.bind(this, 2)}>
+                                {this.state.brandOptions}
+                            </select>
+                        </div>
+                        <div className="form-group col-md-3">
+                            <label className="">Brand 3</label>
+                            <select id="inputState" className="form-control" value={this.state.brandNames.brand3} onChange={this.handleChange.bind(this, 3)}>
+                                {this.state.brandOptions}
+                            </select>
+                        </div>
+                        <div className="form-group col-md-3">
+                            <label className="time-text">Brand 4</label>
+                            <select id="inputState" className="form-control" value={this.state.brandNames.brand4} onChange={this.handleChange.bind(this, 4)}>
+                                {this.state.brandOptions}
+                            </select>
+                        </div>
+                    </div>
                   <div className="row">
                         <div className="form-group col-md-3">
                         <label className="time-text">Time Start</label>
@@ -166,26 +249,27 @@ class BrandStatistics extends React.Component {
                         </div>
                     </div>
                     <div className="form-group col-md-2">
-                        <br/>
                         <div className="row">
+                            <label className="time-text">Query Term</label>
                             <br/>
                             <select id="inputState" className="form-control query-class" ref={(value) => { this.query = value}}>
                                 {this.generateQueryOptions()}
                             </select>
                        </div>
                     </div>
-                      <div className="form-check col-md-2">
+                      <div className="form-check col-md-3">
                           <label className="form-check-label top-3-result">
                               <input type="checkbox" className="form-check-input" ref={(value) => { this.top3results = value}}/>
                                   Only top 3 results
                           </label>
                       </div>
-                    <div className="form-group col-md-2">
+                    <div className="form-group col-md-1">
                         <div className="row"><br/> <br/>
                             <input className="btn btn-dark submit-button"  type="button" value="Submit"  onClick={this.submitStatisticsQuery}/>
                         </div>
                     </div>
                 </div>
+
             </div>
                 <div className="container brands-stats">
                    <div className="row">
@@ -196,14 +280,14 @@ class BrandStatistics extends React.Component {
                 <div className="modal fade" id="errorModal" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Limit Error</h5>
+                            <div className="modal-header alert alert-danger">
+                                <h5 className="modal-title" id="exampleModalLabel">Alert</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <h4>Limit time has to be greater than Start time</h4>
+
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -214,6 +298,8 @@ class BrandStatistics extends React.Component {
             </div>
         );
     }
+
+
 
 
 }
