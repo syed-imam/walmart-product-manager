@@ -11,7 +11,7 @@ Walmart Product Manager is a Web Application that enables automated data collect
     using circle percentages.
 
 ### Technology Used
-Application uses Node and Express for the backend functionality. Additionally it uses React, and Jquery in the front end. MongoDB is used as the persistent database with Mongoose(ORM) primarily because of non-relational nature of data. Libraries like DataTables.js and Typeahead.js are used for faster development time.      
+Application uses Node and Express for the implementation of backend. Additionally it uses React, and Jquery in the front end. MongoDB is used as the persistent database with Mongoose(ODM) primarily because of non-relational nature of data. Libraries like DataTables.js and Typeahead.js are used for faster development time.      
 
 ### Prerequisites
 1. Need to have node and npm installed. <br>
