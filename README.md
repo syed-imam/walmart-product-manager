@@ -52,8 +52,8 @@ Tab 2 (Brand Statistics) renders the brand statistics
 ![Alt text](https://s3.amazonaws.com/adil-static-test/stat.png "Brand Statistics")
 
 ### Possible Modification 
-As per requirements, the API was queried with search terms ["cereal", "cold cereal"]. However, they can be modified in the <br>
-file /server/controllers/product.controller.js inside functions (manualQueryWalmartApi, QueryWalmartApi) to make new requests with <br>
+As per requirements, the API was queried with search terms ["cereal", "cold cereal"]. However, these queries can be modified in the
+file "/server/controllers/product.controller.js" inside functions (manualQueryWalmartApi, QueryWalmartApi) to make new requests with 
 different search terms.
 
 ### Possible Performance Enhancement
