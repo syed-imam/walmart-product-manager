@@ -46,7 +46,7 @@ Tab 2 (Brand Statistics) renders the brand statistics
 
 1. Initial render of this page will generate percentages with default params.
 (query="cereal", startTime=00:00:00, limitTime=23:59:59, brand 1 = "Cheerios", brand 2="Kashi" brand 3="Kellog's" brand 4="Post")
-2. Form on the brand statistics page allows percentages of brands to be determined based on inputted 4 brands, time range of the query.
+2. Form on the brand statistics page allows percentages of brands to be determined based on inputted 4 brands, time range of the query,
  and the search query itself.
 3. Percentages are calculated as per the requirements. The products which did not have any brand name returned from the API are also considered 
   when calculating the percentages.
