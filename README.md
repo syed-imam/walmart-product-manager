@@ -26,6 +26,7 @@ Application uses Node and Express for the backend functionality. Additionally it
 3. run "npm start".
 4. After few seconds, you should see a message saying "Server started on port xxxx". 
 5. Open browser with url: http://localhost:3000
+
 ### How to Use it
 There are 2 tabs on the index page <br>
 <br>
