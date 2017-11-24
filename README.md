@@ -11,7 +11,7 @@ Walmart Product Manager is a Web Application that enables automated data collect
     using circle percentages.
 
 ### Technology Used
-Application uses Node and Express for the backend functionality. Additionally it uses React, and Jquery in the front end. MongoDB is used as the persistent database with Mongoose(ORM) primarily because of non-relational structure of data. Libraries like DataTables.js and Typeahead.js are used for faster development time.      
+Application uses Node and Express for the backend functionality. Additionally it uses React, and Jquery in the front end. MongoDB is used as the persistent database with Mongoose(ORM) primarily because of non-relational nature of data. Libraries like DataTables.js and Typeahead.js are used for faster development time.      
 
 ### Prerequisites
 1. Need to have node and npm installed. <br>
@@ -19,7 +19,7 @@ Application uses Node and Express for the backend functionality. Additionally it
 3. Furthermore application is tested on windows 10, MacOS Sierra version 10.12.6 machines using recent version of Google chrome.
 
 ### Installation
-1. git clone https://github.com/adilimam1993/walmart-product-manager.git
+1. git clone https://gitlab.com/adilimam1993/walmart-product-manager.git
 2. cd into project's root directory 
 2. run "npm install" to install all the dependencies.
 3. Make sure no other app is already listening on port 3000. If there is, change PORT_NUMBER inside .env file in project's root directory.
@@ -32,10 +32,10 @@ There are 2 tabs on the index page <br>
 <br>
 Tab 1 renders the Products Table 
 1. Products table is loaded and displayed with editable brand name.
-2. Editing and saving the changed brand name updates the brand name of the corresponding product in the database.
-3. Table is searchable with any keyword.
-4. Name, Price and search term are all sortable fields.
-5. Green Button in the top right corner allows for additional ability to manually query the API and save data in the database. 
+2. Editing and saving the changed brand name, updates the brand name of the corresponding product in the database.
+3. Table is searchable with keywords.
+4. Name, price and search term are all sortable fields.
+5. Green Button at the top right corner allows for additional ability to manually query the API and save data in the database. 
 <br>
 
 ![Alt text](https://s3.amazonaws.com/adil-static-test/products.png "Products Table")
@@ -46,7 +46,7 @@ Tab 2 (Brand Statistics) renders the brand statistics
 (query="cereal", startTime=00:00:00, limitTime=23:59:59, brand 1 = "Cheerios", brand 2="Kashi" brand 3="Kellog's" brand 4="Post")
 2. Form on the brand statistics page allows percentages of brands to be determined based on inputted 4 brands, time range of the query.
  and the search query itself.
-3. Note: Percentages are calculated as per the requirements. The products which did not have any brand name returned from the API are also considered 
+3. Percentages are calculated as per the requirements. The products which did not have any brand name returned from the API are also considered 
   when calculating the percentages.
 <br>
   
