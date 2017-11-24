@@ -43,7 +43,7 @@ Tab 2 (Brand Statistics) renders the brand statistics
 
 1. Initial render of this page will generate percentages with default params.
 (query="cereal", startTime=00:00:00, limitTime=23:59:59, brand 1 = "Cheerios", brand 2="Kashi" brand 3="Kellog's" brand 4="Post")
-2. Form on the brand statistics page allows percentages of brands to be determined based on inputted 4 brands, time range of tbe query.
+2. Form on the brand statistics page allows percentages of brands to be determined based on inputted 4 brands, time range of the query.
  and the search query itself.
 3. Note: Percentages are calculated as per the requirements. The products which did not have any brand name returned from the API are also considered 
   when calculating the percentages.
@@ -52,12 +52,11 @@ Tab 2 (Brand Statistics) renders the brand statistics
 ![Alt text](https://s3.amazonaws.com/adil-static-test/stat.png "Brand Statistics")
 
 ### Possible Modification 
-As per requirements, the API was queried with search terms ["cereal", "cold cereal"]. However, these queries can be modified in the
-file "/server/controllers/product.controller.js" inside functions (manualQueryWalmartApi, QueryWalmartApi) to make new requests with 
-different search terms.
+As per requirements, the API was queried with search terms ["cereal", "cold cereal"]. However, these queries can be modified in 
+the file "/server/controllers/product.controller.js" inside functions (manualQueryWalmartApi, QueryWalmartApi) to make new requests with different search terms.
 
 ### Possible Performance Enhancement
-For Future, performance can be enhanced by making new ajax calls on each page change, instead of fetching all the data at once. Additionally, lazy loading of some packages can also decrease the load time.
+For Future, performance can be enhanced by making fresh ajax calls on each page change, instead of fetching all the data at once. Additionally, lazy loading of some packages can also decrease the load time.
 
 ## Author
 * **Syed Adil Imam** - (http://syedadilimam.com/)
