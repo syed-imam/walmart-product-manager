@@ -21,14 +21,15 @@ Application uses Node and Express for the backend functionality. Additionally it
 ### Installation
 1. Download the repo as a zip file.
 2. Unzip the zip file.
-2. cd into project's root directory 
-2. run "npm install" to install all the dependencies.
-3. Make sure no other app is already listening on port 3000. If there is, change PORT_NUMBER inside .env file in project's root directory.
-3. run "npm start".
-4. After few seconds, you should see a message saying "Server started on port xxxx". 
-5. Open browser with url: http://localhost:3000
+3. Open command line terminal.
+4. cd into project's root directory 
+5. run "npm install" to install all the dependencies.
+6. Make sure no other app is already listening on port 3000. If there is, change PORT_NUMBER inside .env file in project's root directory.
+7. run "npm start".
+8. After few seconds, you should see a message saying "Server started on port xxxx". 
+9. Open browser with url: http://localhost:3000
 
-### How to Use it
+### How to Use 
 There are 2 tabs on the index page <br>
 <br>
 Tab 1 renders the Products Table 
