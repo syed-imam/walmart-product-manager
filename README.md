@@ -28,8 +28,13 @@ Application uses Node and Express for the backend functionality. Additionally it
 5. Open browser with url: http://localhost:3000
 ### How to Use it
 There are 2 tabs on the index page <br>
-1. Tab 1 (Products Table) loads and displays the products table 
-2. Green Button in the top right corner allows for additional ability to manually query the API and save data in the database. 
+<br>
+Tab 1 shows the Products Table 
+1. Products table is loaded and displayed with editable brand name.
+2. Editing and saving the changed brand name updates the brand name of the corresponding product in the database.
+3. Table is searchable with any keyword.
+4. Name, Price and search term are all sortable fields.
+5. Green Button in the top right corner allows for additional ability to manually query the API and save data in the database. 
 <br>
 
 ![Alt text](https://s3.amazonaws.com/adil-static-test/products.png "Products Table")
