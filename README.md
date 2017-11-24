@@ -1,8 +1,8 @@
 # Walmart Product Manager
-Walmart Product Manager is a Web Application that enables automated data collection from Walmart API and provides useful user interface to the research team.
+Walmart Product Manager is a Web Application that enables automated data collection from Walmart Search API and provides useful user interface to the research team.
 
 ### Features 
-1. **Automatic Data collection** - Node cron job queries the walmart API in fixed intervals of time (20 minutes) <br>
+1. **Automatic Data collection** - Node cron job queries the Walmart Search API in fixed intervals of time (20 minutes) <br>
    (Duration of the time interval can be changed inside config/config.js).
 2. **Data Persistence** - Data fetched from Walmart API is persisted inside MongoDB service hosted on mlab.
 3. **Products Table** - Complete searchable and sortable products table presenting information about products with editable brand names 
@@ -24,7 +24,7 @@ Application uses Node and Express for the backend functionality. Additionally it
 2. run "npm install" to install all the dependencies.
 3. Make sure no other app is already listening on port 3000. If there is, change PORT_NUMBER inside .env file in project's root directory.
 3. run "npm start".
-4. You should see a message called "Server started on port xxxx". 
+4. You should see a message saying "Server started on port xxxx". 
 5. Open browser with url: http://localhost:3000
 ### How to Use it
 There are 2 tabs on the index page <br>
