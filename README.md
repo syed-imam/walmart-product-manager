@@ -1,6 +1,7 @@
 # Walmart Product Manager
 Walmart Product Manager is a Web Application that enables automated data collection from Walmart API and provides useful user interface to the research team.
-## Features 
+
+### Features 
 1. **Automatic Data collection** - Node cron job queries the walmart API in fixed intervals of time (20 minutes) <br>
    (Duration of the time interval can be changed inside config/config.js).
 2. **Data Persistence** - Data fetched from Walmart API is persisted inside MongoDB service hosted on mlab.
@@ -8,10 +9,15 @@ Walmart Product Manager is a Web Application that enables automated data collect
     and auto suggestion of brands is made available.
 4. **Brand Statistics** - Statistics related to percentages of brands appearing in API search results for given search query and time range are shown 
     using circle percentages.
+
+### Technology Used
+Application uses Node and Express for the backend functionality. Additionally it uses React, and Jquery in the front end. MongoDB is used as the persistent database with Mongoose(ORM) primarily because of non-relational structure of data. Libraries like DataTables.js and Typeahead.js are used for faster development time.      
+
 ### Prerequisites
 1. Need to have node and npm installed. <br>
 2. Note that the application was developed and tested on: node --version: 6.9.4, npm --version 3.10.10 <br>
 3. Furthermore application is tested on windows 10, MacOS Sierra version 10.12.6 machines using recent version of Google chrome.
+
 ### Installation
 1. git clone https://github.com/adilimam1993/walmart-product-manager.git
 2. cd into project's root directory 
@@ -43,6 +49,9 @@ Tab 2 (Brand Statistics) renders the brand statistics <br>
 As per requirements, the API was queried with search terms ["cereal", "cold cereal"]. However, they can be modified in the <br>
 file /server/controllers/product.controller.js inside functions (manualQueryWalmartApi, QueryWalmartApi) to make new requests with <br>
 different search terms.
+
+### Possible Performance Enhancement
+For Future, performance can be enhanced by making new ajax calls on each page change, instead of fetching all the data at once. Additionally, lazy loading of some packages can also decrease the load time.
 
 ## Author
 * **Syed Adil Imam** - (http://syedadilimam.com/)
