@@ -19,7 +19,8 @@ Application uses Node and Express for the backend functionality. Additionally it
 3. Furthermore application is tested on windows 10, MacOS Sierra version 10.12.6 machines using recent version of Google chrome.
 
 ### Installation
-1. git clone https://gitlab.com/adilimam1993/walmart-product-manager.git
+1. Download the repo as a zip file.
+2. Unzip the zip file.
 2. cd into project's root directory 
 2. run "npm install" to install all the dependencies.
 3. Make sure no other app is already listening on port 3000. If there is, change PORT_NUMBER inside .env file in project's root directory.
