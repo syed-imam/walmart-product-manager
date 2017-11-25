@@ -13,7 +13,7 @@ function saveBrandValue(id, brandValue){
         data: brandData
     })
         .done(function(res){
-            $(".success-modal").html("<h4>Brand Updated Successfully</h4>");
+            $(".msg-modal").html("<h4>Brand Updated Successfully</h4>");
             $("#submitModal").modal();
         });
 }
