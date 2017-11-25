@@ -23,8 +23,14 @@ function manualQueryWalmart(){
         method: "POST",
         url: "/manual-walmart-search-api",
     }).done(function(res){
-        $(".success-modal").html("<h4>Query Finished Successfully</h4>");
-        $("#submitModal").modal();
+        if(res === "Success"){
+            $(".msg-modal").html("<h4>Query Finished Successfully</h4>");
+            $("#submitModal").modal();
+        }
+        else{
+            $(".msg-modal").html("<h4>API Service not available at this time</h4>");
+            $("#submitModal").modal();
+        }
     });
 }
 

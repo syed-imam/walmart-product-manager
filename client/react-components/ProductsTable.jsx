@@ -147,13 +147,13 @@ render() {
                 <div className="modal fade" id="submitModal" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
-                            <div className="modal-header alert alert-success">
-                                <h5 className="modal-title" id="exampleModalLabel">Brand Update</h5>
+                            <div className="modal-header alert">
+                                <h5 className="modal-title" id="exampleModalLabel">Update</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div className="modal-body success-modal">
+                            <div className="modal-body msg-modal">
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

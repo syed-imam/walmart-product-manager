@@ -202,6 +202,7 @@ function manualQueryWalmartApi(req, res, next){
         res.send("Success");
     })).catch(error => {
         console.log(error);
+        res.send("Failure");
     });
 }
 
