@@ -71,11 +71,11 @@ function calculatePercentageOfBrands(req, res) {
      let startTime=req.body.timeStart;
      let limitTime=req.body.limitTime;
      let searchQuery=req.body.searchQuery;
-     let result = [];
+     let empty = [];
     /*
         Queries mongoDB to return percentages of brands in search results within a given time range and a search query
      */
-    Product.find({$or: [{queryTime: {$gte: startTime}}, {queryTime: {$lte: limitTime}}]}).count(function (err, numOfProductsInTimeRange){
+    Product.find([{$and: [{$or: [{queryTime: {$gte: startTime}}, {queryTime: {$lte: limitTime}}]}, {query: searchQuery}]}]).count(function (err, numOfProductsInTimeRange){
           if(numOfProductsInTimeRange) {//Aggeregate query to get percentage of brands
               Product.aggregate([{"$match": {"queryTime": {$gte: startTime, $lte: limitTime}, "query": searchQuery}},
                   {"$group": {"_id": {"brandName": "$brandName"}, "count": {"$sum": 1}}},
@@ -88,19 +88,12 @@ function calculatePercentageOfBrands(req, res) {
               ]).exec((err, productsPercentages) => {
                   if (err) throw err;
                   else {
-                      /*
-                      for (let product of productsPercentages) {
-                          if (product._id.brandName === "Cheerios" || product._id.brandName === "Post" || product._id.brandName === "Kellogg's" || product._id.brandName === "Kashi") {
-                              result.push(product);
-                          }
-                      }
-                      */
                       res.send(JSON.stringify(productsPercentages));
                   }
               });
           }
           else{
-              res.send(JSON.stringify(result));
+              res.send(JSON.stringify(empty));
           }
         }
     )
@@ -115,9 +108,9 @@ function calculatePercentageOfBrandsTop3Results(req, res) {
     let startTime=req.body.timeStart;
     let limitTime=req.body.limitTime;
     let searchQuery=req.body.searchQuery;
-    let result =[];
+    let empty =[];
 
-    Product.find({$or: [{queryTime: {$gte: startTime}}, {queryTime: {$lte: limitTime}}]}).count(function (err, numOfProductsInTimeRange){
+    Product.find({$and: [{$or: [{queryTime: {$gte: startTime}}, {queryTime: {$lte: limitTime}}]},{query: searchQuery}]}).count(function (err, numOfProductsInTimeRange){
          if(numOfProductsInTimeRange){
            //Limit the search result to top 3
             const Limit=3;
@@ -127,18 +120,12 @@ function calculatePercentageOfBrandsTop3Results(req, res) {
             ]).exec((err, productsPercentages) =>{
                 if(err) throw err;
                 else {
-                    for(let product of productsPercentages){
-                        if(product._id.brandName === "Cheerios" || product._id.brandName === "Post" || product._id.brandName === "Kellogg's" || product._id.brandName === "Kashi")
-                        {
-                            result.push(product);
-                        }
-                    }
-                    res.send(JSON.stringify(result));
+                    res.send(JSON.stringify(productsPercentages));
                 }
             });
          }
          else{
-             res.send(JSON.stringify(result));
+             res.send(JSON.stringify(empty));
          }
         }
     )
