@@ -19,7 +19,7 @@ class BrandStatistics extends React.Component {
         this.submitStatisticsQuery = this.submitStatisticsQuery.bind(this);
     }
 
-    componentWillMount(){
+    componentDidMount(){
         this.generateBrandOptions();
         this.buildBrandsStatList(0, 86399, "cereal","/percentage-of-brands");
     }
@@ -298,9 +298,6 @@ class BrandStatistics extends React.Component {
             </div>
         );
     }
-
-
-
 
 }
 export default BrandStatistics;

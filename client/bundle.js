@@ -11388,8 +11388,8 @@ var BrandStatistics = function (_React$Component) {
     }
 
     _createClass(BrandStatistics, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
             this.generateBrandOptions();
             this.buildBrandsStatList(0, 86399, "cereal", "/percentage-of-brands");
         }
@@ -12025,8 +12025,8 @@ var ProductsTable = function (_React$Component) {
     }
 
     _createClass(ProductsTable, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
             var _this2 = this;
 
             _axios2.default.all([_axios2.default.get('/request-walmart-brands'), _axios2.default.get('/request-walmart-products')]).then(_axios2.default.spread(function (res1, res2) {

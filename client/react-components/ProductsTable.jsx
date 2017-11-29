@@ -11,7 +11,7 @@ class ProductsTable extends React.Component{
     }
 
 
-    componentWillMount(){
+    componentDidMount(){
         axios.all([
             axios.get('/request-walmart-brands'),
             axios.get('/request-walmart-products')
