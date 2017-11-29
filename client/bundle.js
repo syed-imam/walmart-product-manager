@@ -12103,7 +12103,7 @@ var ProductsTable = function (_React$Component) {
 
                 $("#table_id_paginate").click(function () {
 
-                    $('.typeahead').typeahead('destroy'); //i need to use this clear already created typeahead()!
+                    $('.typeahead').typeahead('destroy'); //Clear already created typeahead()!
                     // Initializing the typeahead
                     $('.typeahead').typeahead({
                         hint: true,

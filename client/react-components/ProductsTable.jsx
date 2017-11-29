@@ -151,6 +151,7 @@ render() {
                 <div id="centre-screen">
                 <ReactLoadingComponent type={this.state.type} color={this.state.color} delay={this.state.delay} show={this.state.renderLoadingComponent} height={this.state.height} width={this.state.width}/>
                 </div>
+
                 <div className="modal fade" id="submitModal" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
