@@ -146,3 +146,14 @@ margin-top: 10%;
     color: white;
     align: right;
 }
+
+.extend-screen{
+    height:100%;
+    width:100%;
+    overflow:hidden;
+}
+
+#centre-screen{
+    margin-left:35%;
+    margin-top:15%;
+}

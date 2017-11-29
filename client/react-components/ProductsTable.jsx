@@ -1,18 +1,23 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import {Table} from 'react-bootstrap';
+import ReactLoadingComponent from './LoadingComponent';
 
 class ProductsTable extends React.Component{
 
-    constructor(props){
+    constructor(props) {
         super();
+        this.state = {show: false, delay:0, color:"#A9A9A9", type:"spokes" , height:520, width:300};
     }
+
 
     componentWillMount(){
         axios.all([
             axios.get('/request-walmart-brands'),
             axios.get('/request-walmart-products')
         ]).then(axios.spread((res1, res2) => {
+
+            this.setState({renderLoadingComponent:true});  //Dont show the loading component
             let brandsResult=res1.data;
             let productSet=res2.data;
 
@@ -122,7 +127,6 @@ class ProductsTable extends React.Component{
         })).catch(error => {
             console.log(error);
         });
-
     }
 
 render() {
@@ -144,6 +148,9 @@ render() {
                     </tbody>
                 </Table>
 
+                <div id="centre-screen">
+                <ReactLoadingComponent type={this.state.type} color={this.state.color} delay={this.state.delay} show={this.state.renderLoadingComponent} height={this.state.height} width={this.state.width}/>
+                </div>
                 <div className="modal fade" id="submitModal" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">

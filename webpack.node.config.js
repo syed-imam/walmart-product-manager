@@ -13,8 +13,8 @@ module.exports =
         target: 'node',
         entry: './index.js',
         output: {
-            path: path.join(__dirname,  '/client'),
-            filename: 'bundle.js'
+        //    path: path.join(__dirname,  '/client'),
+       //     filename: 'bundle.js'
         },
         externals: nodeModules,
         module: {
