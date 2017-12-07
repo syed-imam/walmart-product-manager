@@ -29,15 +29,18 @@ class ProductsTable extends React.Component{
                     "targets" : 0,
                     "data": "mediumImage",
                     "render" : function (data, type, full) {
-                        data= data === undefined ? '../img/img-not-found.jpg' : data;
-                        return '<img height="48px" width="48px" src="'+data+'"/>';
-                    }},
+                        if(data === undefined){
+                            return '<div style="margin-left:15%" class="text-justify text-danger">Not found</div>';
+                        }
+                        else{
+                            return '<img height="48px" width="48px" src="'+data+'"/>';
+                        }}},
                     {
                         "targets" : 6,
                         "data": "customerRatingImage",
                         "render" : function (data, type, full) {
                             if(data === undefined){
-                                return '<div style="margin-left:15%" class="text-justify text-danger">None<div>';
+                                return '<div style="margin-left:15%" class="text-justify text-danger">None</div>';
                             }
                             else{
                                 return '<img height="100%" width="80%" src="'+data+'"/>';
@@ -53,11 +56,12 @@ class ProductsTable extends React.Component{
                         "targets": 2,
                          "data":"brandName",
                         "render": function (data, type, full) {
+                            console.log(full);
                             full.brandName= full.brandName === undefined ? 'Brand Name Not Available' : full.brandName;
                             return '<div id="bs-example">'+
                                    ' <div class="row"><div class="col-md-8">' +
                                           '<input class="typeahead tt-query custom-query" autocomplete="on" spellcheck="false" value="'+full.brandName+'"/></div>'+
-                                            '<div class="col-lg-4"><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full._id + '\', this.parentNode.previousElementSibling.childNodes[0].childNodes[1].value)" '+
+                                            '<div class="col-lg-4"><button data-toggle="tooltip" title="Save" onclick="saveBrandValue(\'' + full.name + '\', this.parentNode.previousElementSibling.childNodes[0].childNodes[1].value)" '+
                                                'class="btn btn-default btn-round-sm btn-sm save-button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>'+
                                            '</div>'+
                                         '</div>'+
@@ -68,7 +72,7 @@ class ProductsTable extends React.Component{
                         "targets":3,
                         "data":"salePrice",
                         "render": function (data, type, full) {
-                            data=data === undefined ? '<div style="margin-left:5%" class="text-justify text-danger">None<div>' : '$'+data;
+                            data=data === undefined ? '<div style="margin-left:5%" class="text-justify text-danger">None</div>' : '$'+data;
                             return '<div>'+data+'</div>';
                         }
                     },
@@ -76,7 +80,7 @@ class ProductsTable extends React.Component{
                         "targets":4,
                         "data":"msrp",
                         "render": function (data, type, full) {
-                            data=data === undefined ? '<div style="margin-left:5%" class="text-justify text-danger">None<div>' : '$'+data;
+                            data=data === undefined ? '<div style="margin-left:5%" class="text-justify text-danger">None</div>' : '$'+data;
                             return '<div>'+data+'</div>';
                         }
                     }

@@ -16,8 +16,8 @@ const walmartApiKey=config.walmartSearchAPI.apiKey;
  * @param res
  */
 function queryWalmartApi(req, res, next){
-
-    let search1="cereal";
+console.log("Executed");
+    let search1="ceral";
     let search2="cold+cereal";
     axios.all([
         axios.get(walmartApiEndpoint+"?query="+search1+"&format=json&responseGroup=full&facet=on&apiKey="+walmartApiKey),
@@ -30,6 +30,7 @@ function queryWalmartApi(req, res, next){
     })).catch(error => {
         console.log(error);
     });
+
 }
 
 
@@ -50,7 +51,7 @@ function buildModelData(response, next){
               salePrice: item.salePrice,
               mediumImage: item.mediumImage,
               brandName: item.brandName,
-              queryTime: (hours* 3600) + (minutes*60) + (seconds * 1),
+              queryTime: (hours* 3600) + (minutes*60) + (seconds*1),
               productUrl: item.productUrl
           });
 
@@ -116,7 +117,12 @@ function calculatePercentageOfBrandsTop3Results(req, res) {
             const Limit=3;
             Product.aggregate([{"$match": {'queryTime':{$gte: startTime, $lte: limitTime},"query": searchQuery}}, {$limit : Limit},
                 { "$group": { "_id": {"brandName":  "$brandName"}, "count": { "$sum": 1 }}},
-                { "$project": {"count": 1,"percentage": { "$multiply": [ { "$divide": [ "$count", {"$literal": Limit }] }, 100 ] }}}
+                {
+                    "$project": {
+                        "count": 1,
+                        "percentage": { "$multiply": [ { "$divide": [ "$count", {"$literal": Limit }] }, 100 ] }
+                    }
+                }
             ]).exec((err, productsPercentages) =>{
                 if(err) throw err;
                 else {
@@ -160,18 +166,23 @@ function requestUniqueBrands(req, res){
  */
 function updateBrandName(req, res){
 
-    var id = req.body.id;
+    var name = req.body.name;
     var newBrand= req.body.newBrand;
 
-   Product.findOne({"_id":id}, function(err, doc){
+   Product.find({"name":name}, function(err, collect){
        if(err){ console.log(err); throw err;}
-       doc.brandName=newBrand;
-       doc.save(function(err, updatedDoc){
-          if(err){
-              throw err;
-          }
-           res.send(updatedDoc);
+       for(let doc of collect){
+
+           doc.brandName=newBrand;
+           doc.save(function(err, updatedDoc){
+               if(err){
+                   throw err;
+               }
+
        });
+       }
+           res.send("Successful");
+
    });
 }
 

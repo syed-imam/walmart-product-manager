@@ -34,8 +34,5 @@ router.get('/request-walmart-products', productCtrl.requestProducts);
 
 router.get('/request-walmart-brands', productCtrl.requestUniqueBrands);
 
-
-
-
 export default router;
 

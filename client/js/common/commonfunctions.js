@@ -5,8 +5,8 @@
  */
 
 
-function saveBrandValue(id, brandValue){
-    var brandData={id: id, newBrand: brandValue}
+function saveBrandValue(name, brandValue){
+    var brandData={name: name, newBrand: brandValue}
     $.ajax({
         method: "POST",
         url: "/update-brand-name",
