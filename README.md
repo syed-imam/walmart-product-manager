@@ -40,7 +40,6 @@ Tab 1 renders the Products Table
 5. Green Button at the top right corner allows for additional ability to manually query the API and save data in the database. 
 <br>
 
-![Alt text](https://s3.amazonaws.com/adil-static-test/products.png "Products Table")
 
 Tab 2 (Brand Statistics) renders the brand statistics 
 
@@ -52,7 +51,6 @@ Tab 2 (Brand Statistics) renders the brand statistics
   when calculating the percentages.
 <br>
   
-![Alt text](https://s3.amazonaws.com/adil-static-test/stat.png "Brand Statistics")
 
 ### Possible Modification 
 As per requirements, the API was queried with search terms ["cereal", "cold cereal"]. However, these queries can be modified in 
