@@ -57,7 +57,7 @@ As per requirements, the API was queried with search terms ["cereal", "cold cere
 the file "/server/controllers/product.controller.js" inside functions (manualQueryWalmartApi, QueryWalmartApi) to make new requests with different search terms.
 
 ### Possible Performance Enhancement
-For Future, performance can be enhanced by making fresh ajax calls on each page change, instead of fetching all the data at once. Additionally, lazy loading of some packages can also decrease the load time.
+For Future, performance can be enhanced by making fresh ajax calls on each page change, instead of fetching all the data at once. 
 
 ## Author
 * **Syed Adil Imam** - (http://syedadilimam.com/)
